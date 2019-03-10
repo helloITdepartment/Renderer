@@ -4,14 +4,29 @@ public class RadialGeometry {
 	double _radius;
 	
 	//Constructors
-		//Empty constructor
+	//Empty constructor
+	public RadialGeometry(){
+		
+	}
 			
-		//Parameterized constructor
+	//Parameterized constructor
+	public RadialGeometry(double radius){
+		_radius = radius;
+	}
 		
-		//Copy constructor
+	//Copy constructor
+	public RadialGeometry(RadialGeometry other){
+		_radius = other._radius;
+	}
 		
-		//Getters
+	//Getters
+	public double getRadius(){
+		return _radius;
+	}
 		
-		//Setters
+	//Setters
+	public void setRadius(double radius){
+		_radius = radius;
+	}
 
 }
