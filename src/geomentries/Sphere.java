@@ -7,10 +7,16 @@ public class Sphere extends RadialGeometry{
 	//Constructors
 	//Empty constructor
 	public Sphere(){
-		
+		super();
+		_center = new Point3D();
 	}
 	
-	//Parameterized constructor
+	//Parameterized constructors
+	public Sphere(Point3D center){
+		super();
+		_center = center;
+	}
+	
 	public Sphere(double radius, Point3D center){
 		_radius = radius;
 		_center = center;

@@ -6,11 +6,18 @@ public class Point3D extends Point2D{
 	//Constructors
 	//Empty constructor
 	public Point3D(){
-		
+		super();
+		_z = new Coordinate();
 	}
 			
-	//Parameterized constructor
+	//Parameterized constructors
 	public Point3D(Coordinate z){
+		super();
+		_z = z;
+	}
+	
+	public Point3D(Coordinate x, Coordinate y, Coordinate z){
+		super(x, y);
 		_z = z;
 	}
 		

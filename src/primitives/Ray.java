@@ -7,7 +7,8 @@ public class Ray{
 	//Constructors
 	//Empty constructor
 	public Ray(){
-		
+		_source = new Point3D();
+		_direction = new Vector();
 	}
 			
 	//Parameterized constructor

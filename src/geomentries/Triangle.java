@@ -9,7 +9,9 @@ public class Triangle{
 	//Constructors
 	//Empty constructor
 	public Triangle(){
-		
+		_p1 = new Point3D();
+		_p2 = new Point3D();
+		_p3 = new Point3D();
 	}
 			
 	//Parameterized constructor

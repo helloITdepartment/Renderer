@@ -7,10 +7,16 @@ public class Cylinder extends RadialGeometry{
 	//Constructors
 	//Empty constructor
 	public Cylinder(){
-		
+		super();
+		_axisRay = new Ray();
 	}
 			
-	//Parameterized constructor
+	//Parameterized constructors
+	public Cylinder(Ray axisRay){
+		super();
+		_axisRay = axisRay;
+	}
+	
 	public Cylinder(double radius, Ray axisRay){
 		_radius = radius;
 		_axisRay = axisRay;

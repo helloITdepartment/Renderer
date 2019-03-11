@@ -6,7 +6,7 @@ public class Vector{
 	//Constructors
 	//Empty constructor
 	public Vector(){
-		
+		_head = new Point3D();
 	}
 			
 	//Parameterized constructor

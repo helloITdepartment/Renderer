@@ -7,8 +7,8 @@ public class Point2D{
 	//Constructors
 	//Empty constructor
 	public Point2D(){
-//		_x = Coordinate();
-//		_y = Coordinate();
+		_x = new Coordinate();
+		_y = new Coordinate();
 	}
 		
 	//Parameterized constructor

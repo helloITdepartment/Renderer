@@ -6,7 +6,7 @@ public class RadialGeometry {
 	//Constructors
 	//Empty constructor
 	public RadialGeometry(){
-		
+		_radius = 0.0;
 	}
 			
 	//Parameterized constructor
