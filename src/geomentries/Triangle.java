@@ -30,15 +30,15 @@ public class Triangle{
 		
 	//Getters
 	public Point3D getP1(){
-		return _p1;
+		return new Point3D(_p1);
 	}
 	
 	public Point3D getP2(){
-		return _p2;
+		return new Point3D(_p2);
 	}
 	
 	public Point3D getP3(){
-		return _p3;
+		return new Point3D(_p3);
 	}
 	
 	//Setters

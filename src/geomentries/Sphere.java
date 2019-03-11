@@ -31,7 +31,7 @@ public class Sphere extends RadialGeometry{
 	//Getters
 	//radius getter is unnecessary as it's inherited from RadialGeometry
 	public Point3D getCenter(){
-		return _center;
+		return new Point3D(_center);
 	}
 		
 	//Setters

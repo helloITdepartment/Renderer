@@ -25,11 +25,11 @@ public class Point2D{
 	
 	//Getters
 	public Coordinate getX(){
-		return _x;
+		return new Coordinate(_x);
 	}
 	
 	public Coordinate getY(){
-		return _y;
+		return new Coordinate(_y);
 	}
 	//Setters
 	public void setX(Coordinate x){

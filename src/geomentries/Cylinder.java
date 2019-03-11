@@ -31,7 +31,7 @@ public class Cylinder extends RadialGeometry{
 	//Getters
 	//radius getter is unnecessary as it's inherited from RadialGeometry
 	public Ray getAxisRay(){
-		return _axisRay;
+		return new Ray(_axisRay);
 	}
 	
 	//Setters

@@ -29,7 +29,7 @@ public class Point3D extends Point2D{
 	//Getters
 	//getX and getY are unnecessary because they are inherited from Point2D
 	public Coordinate getZ(){
-		return _z;
+		return new Coordinate(_z);
 	}
 	
 	//Setters

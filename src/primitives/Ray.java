@@ -25,11 +25,11 @@ public class Ray{
 		
 	//Getters
 	public Point3D getSource(){
-		return _source;
+		return new Point3D(_source);
 	}
 	
 	public Vector getDirection(){
-		return _direction;
+		return new Vector(_direction);
 	}
 	//Setters
 	public void setSource(Point3D source){

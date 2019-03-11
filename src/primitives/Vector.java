@@ -21,7 +21,7 @@ public class Vector{
 		
 	//Getters
 	public Point3D getHead(){
-		return _head;
+		return new Point3D(_head);
 	}
 		
 	//Setters
