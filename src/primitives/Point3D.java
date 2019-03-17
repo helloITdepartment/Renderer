@@ -37,4 +37,16 @@ public class Point3D extends Point2D{
 	public void setZ(Coordinate z){
 		_z = z;
 	}
+
+	public int compareTo(Point3D other){
+		if(_x == other.getX()){
+			if(_y == other.getY()){
+				return (_z == other.getZ()) ? 1 : 0;
+			}else{
+				return 0;
+			}
+		}else{
+			return 0;
+		}
+	}
 }

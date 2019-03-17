@@ -40,7 +40,7 @@ public class Point2D{
 		_y = y;
 	}
 
-	public int compateTo(Point2D other){
+	public int compareTo(Point2D other){
 		return (_x._coordinate == other.getX()._coordinate && _y._coordinate == other.getY()._coordinate) ? 1 : 0; //Checks to see if the x values are equal and then if the y values are equal. Returns 1 if it's all true, 0 otherwise
 	}
 }
