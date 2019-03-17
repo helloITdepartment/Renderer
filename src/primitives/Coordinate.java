@@ -30,7 +30,7 @@ public class Coordinate {
 	}
 
 	public int compareTo(Coordinate other){
-		return _coordinate == other._coordinate ? 1 : 0;
+		return _coordinate == other._coordinate ? 1 : 0; //Checks that the coordinate values are equal and returns 1 if true, 0 if not
 	}
 	
 	public Coordinate add(Coordinate other){
