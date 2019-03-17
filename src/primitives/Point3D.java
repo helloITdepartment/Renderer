@@ -38,6 +38,7 @@ public class Point3D extends Point2D{
 		_z = z;
 	}
 
+	//Checks to make sure corresponding values match and returns 1 if they all do, returns 0 if any of them mismatch
 	public int compareTo(Point3D other){
 		if(_x == other.getX()){
 			if(_y == other.getY()){
@@ -49,4 +50,22 @@ public class Point3D extends Point2D{
 			return 0;
 		}
 	}
+
+	//Adds corresponding x, y, and z values and returns a new Point3D
+	public Point3D add(Vector v){
+		Coordinate newX = super.getX().add(v.getHead().getX());
+		Coordinate newY = super.getY().add(v.getHead().getY());
+		Coordinate newZ = _z.add(v.getHead().getZ());
+		
+		return new Point3D(newX, newY, newZ);
+	}
+	
+	//Subtracts corresponding x, y, and z values and returns a new Point3D
+	public Point3D subtract(Vector v){
+			Coordinate newX = super.getX().subtract(v.getHead().getX());
+			Coordinate newY = super.getY().subtract(v.getHead().getY());
+			Coordinate newZ = _z.subtract(v.getHead().getZ());
+			
+			return new Point3D(newX, newY, newZ);
+		}
 }
