@@ -1,7 +1,9 @@
 package geomentries;
+import java.util.List;
+
 import primitives.*;
 
-public class Plane {
+public class Plane implements Geometry{
 	Point3D _p1;
 	Point3D _p2;
 	Point3D _p3;
@@ -54,4 +56,8 @@ public class Plane {
 		_p3 = p3;
 	}
 
+	public List<Point3D> findIntersection(Ray r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

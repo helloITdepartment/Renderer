@@ -28,4 +28,5 @@ public class Vector{
 	public void setHead(Point3D head){
 		_head = head;
 	}
-}
+
+} 

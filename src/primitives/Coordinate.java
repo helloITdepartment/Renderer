@@ -28,4 +28,17 @@ public class Coordinate {
 	public void setCoordinate(double coord){
 		_coordinate = coord;
 	}
+
+	public int compareTo(Coordinate other){
+		return _coordinate == other._coordinate ? 1 : 0;
+	}
+	
+	public Coordinate add(Coordinate other){
+		return new Coordinate(_coordinate + other._coordinate);
+	}
+
+	public Coordinate subtract(Coordinate other){
+		return new Coordinate(_coordinate - other._coordinate);
+	}
+	
 }

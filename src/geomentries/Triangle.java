@@ -1,7 +1,9 @@
 package geomentries;
+import java.util.List;
+
 import primitives.*;
 
-public class Triangle{
+public class Triangle implements Geometry{
 	Point3D _p1;
 	Point3D _p2;
 	Point3D _p3;
@@ -52,6 +54,12 @@ public class Triangle{
 	
 	public void setP3(Point3D p3){
 		_p3 = p3;
+	}
+
+	@Override
+	public List<Point3D> findIntersection(Ray r) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

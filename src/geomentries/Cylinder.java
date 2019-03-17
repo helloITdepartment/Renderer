@@ -1,7 +1,9 @@
 package geomentries;
+import java.util.List;
+
 import primitives.*;
 
-public class Cylinder extends RadialGeometry{
+public class Cylinder extends RadialGeometry implements Geometry{
 	Ray _axisRay;
 	
 	//Constructors
@@ -40,4 +42,8 @@ public class Cylinder extends RadialGeometry{
 		_axisRay = axisRay;
 	}
 
+	public List<Point3D> findIntersection(Ray r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

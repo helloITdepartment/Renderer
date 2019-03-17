@@ -1,7 +1,9 @@
 package geomentries;
+import java.util.List;
+
 import primitives.*;
 
-public class Sphere extends RadialGeometry{
+public class Sphere extends RadialGeometry implements Geometry{
 	Point3D _center;
 	
 	//Constructors
@@ -40,4 +42,8 @@ public class Sphere extends RadialGeometry{
 		_center = center;
 	}
 
+	public List<Point3D> findIntersection(Ray r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
