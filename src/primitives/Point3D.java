@@ -23,6 +23,7 @@ public class Point3D extends Point2D{
 		
 	//Copy constructor
 	public Point3D(Point3D other){
+		super(other.getX(), other.getY());
 		_z = other._z;
 	}
 	
@@ -40,9 +41,9 @@ public class Point3D extends Point2D{
 
 	//Checks to make sure corresponding values match and returns 1 if they all do, returns 0 if any of them mismatch
 	public int compareTo(Point3D other){
-		if(_x == other.getX()){
-			if(_y == other.getY()){
-				return (_z == other.getZ()) ? 1 : 0;
+		if(_x.getCoordinate() == other.getX().getCoordinate()){
+			if(_y.getCoordinate() == other.getY().getCoordinate()){
+				return (_z.getCoordinate() == other.getZ().getCoordinate()) ? 1 : 0;
 			}else{
 				return 0;
 			}

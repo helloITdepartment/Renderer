@@ -8,6 +8,11 @@ public class Vector{
 	public Vector(){
 		_head = new Point3D();
 	}
+	
+	//Constructor straight from doubles to Vector
+	public Vector(double x, double y, double z){
+		_head = new Point3D(new Coordinate(x), new Coordinate(y), new Coordinate(z));
+	}
 			
 	//Parameterized constructor
 	public Vector(Point3D head){
@@ -68,6 +73,10 @@ public class Vector{
 	public Vector normalize(){
 		double len = length();
 		
+		if(len == 0.0){
+			throw new IllegalArgumentException("Cannot normalize the zero vector. Will result in divide by zero");
+		}
+		
 		Coordinate newX = new Coordinate(_head.getX().getCoordinate()/len);
 		Coordinate newY = new Coordinate(_head.getY().getCoordinate()/len);
 		Coordinate newZ = new Coordinate(_head.getZ().getCoordinate()/len);
@@ -80,5 +89,15 @@ public class Vector{
 	//Multiplies all the corresponding components of the vectors and returns a double of their sum
 	public double dotProduct(Vector other){
 		return (_head.getX().getCoordinate() * other.getHead().getX().getCoordinate()) + (_head.getY().getCoordinate() * other.getHead().getY().getCoordinate()) + (_head.getZ().getCoordinate() * other.getHead().getZ().getCoordinate());
+	}
+	
+	public String toString(){
+		String ret = "X: ";
+		ret += _head.getX().getCoordinate();
+		ret += " Y: ";
+		ret += _head.getY().getCoordinate();
+		ret += " Z: ";
+		ret += _head.getZ().getCoordinate();
+		return ret;
 	}
 } 
