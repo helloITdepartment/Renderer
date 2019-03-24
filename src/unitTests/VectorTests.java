@@ -39,22 +39,25 @@ public class VectorTests {
 		Vector v = new Vector(2.5, 3.6, 1.0);
 		Vector newV = v.subtract(new Vector(1.0, 1.0, 1.0));
 		
-		assertEquals("X coordinate failed under positive subtraction", 1.5, newV.getHead().getX().getCoordinate(), 1e-10);
-		assertEquals("Y coordinate failed under positive subtraction", 2.6, newV.getHead().getY().getCoordinate(), 1e-10);
-		assertEquals("Z coordinate failed under positive subtraction", 0.0, newV.getHead().getZ().getCoordinate(), 1e-10);
+		assertEquals("", 1, newV.compareTo(new Vector(1.5, 2.6, 0.0)));
+//		assertEquals("X coordinate failed under positive subtraction", 1.5, newV.getHead().getX().getCoordinate(), 1e-10);
+//		assertEquals("Y coordinate failed under positive subtraction", 2.6, newV.getHead().getY().getCoordinate(), 1e-10);
+//		assertEquals("Z coordinate failed under positive subtraction", 0.0, newV.getHead().getZ().getCoordinate(), 1e-10);
 		
 		
 		newV = v.subtract(new Vector(-1.0, -1.0, -1.0));
 		
-		assertEquals("X coordinate failed under negative subtraction", 3.5, newV.getHead().getX().getCoordinate(), 1e-10);
-		assertEquals("Y coordinate failed under negative subtraction", 4.6, newV.getHead().getY().getCoordinate(), 1e-10);
-		assertEquals("Z coordinate failed under negative subtraction", 2.0, newV.getHead().getZ().getCoordinate(), 1e-10);
+		assertEquals("", 1, newV.compareTo(new Vector(3.5, 4.6, 2.0)));
+//		assertEquals("X coordinate failed under negative subtraction", 3.5, newV.getHead().getX().getCoordinate(), 1e-10);
+//		assertEquals("Y coordinate failed under negative subtraction", 4.6, newV.getHead().getY().getCoordinate(), 1e-10);
+//		assertEquals("Z coordinate failed under negative subtraction", 2.0, newV.getHead().getZ().getCoordinate(), 1e-10);
 		
 		newV = v.subtract(new Vector(0.0, 0.0, 0.0));
 		
-		assertEquals("X coordinate failed under zero subtraction", 2.5, newV.getHead().getX().getCoordinate(), 1e-10);
-		assertEquals("Y coordinate failed under zero subtraction", 3.6, newV.getHead().getY().getCoordinate(), 1e-10);
-		assertEquals("Z coordinate failed under zero subtraction", 1.0, newV.getHead().getZ().getCoordinate(), 1e-10);
+		assertEquals("", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
+//		assertEquals("X coordinate failed under zero subtraction", 2.5, newV.getHead().getX().getCoordinate(), 1e-10);
+//		assertEquals("Y coordinate failed under zero subtraction", 3.6, newV.getHead().getY().getCoordinate(), 1e-10);
+//		assertEquals("Z coordinate failed under zero subtraction", 1.0, newV.getHead().getZ().getCoordinate(), 1e-10);
 		
 	}
 	
@@ -77,7 +80,19 @@ public class VectorTests {
 	
 	@Test
 	public void testDotProduct(){
+		Vector v = new Vector(3.4, 5.6, 7.8);
+		Vector newV = new Vector(0.9, 4.3, 2.1);
 		
+		assertEquals("Failed under normal dot product", 43.52, v.dotProduct(newV), 1e-10);
+		
+		newV = new Vector(-0.9, -4.3, -2.1);
+		assertEquals("Failed under dot product with vector of opposing sign", -43.52, v.dotProduct(newV), 1e-10);
+		
+		newV = new Vector(0.0, 0.0, 0.0);
+		assertEquals("Failed under dot product with zero vector", 0.0, v.dotProduct(newV), 1e-10);
+		
+		newV = new Vector(-11.9, 4.3, 2.1);
+		assertEquals("Failed under dot product with orthogonal vector", 0, v.dotProduct(newV), 1e-10);
 	}
 	
 	@Test
