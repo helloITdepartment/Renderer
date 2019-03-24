@@ -1,4 +1,4 @@
-package geomentries;
+package geometries;
 
 public class RadialGeometry {
 	double _radius;

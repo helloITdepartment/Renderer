@@ -1,45 +1,45 @@
-package geomentries;
+package geometries;
 import java.util.List;
 
 import primitives.*;
 
-public class Sphere extends RadialGeometry implements Geometry{
-	Point3D _center;
+public class Cylinder extends RadialGeometry implements Geometry{
+	Ray _axisRay;
 	
 	//Constructors
 	//Empty constructor
-	public Sphere(){
+	public Cylinder(){
 		super();
-		_center = new Point3D();
+		_axisRay = new Ray();
 	}
-	
+			
 	//Parameterized constructors
-	public Sphere(Point3D center){
+	public Cylinder(Ray axisRay){
 		super();
-		_center = center;
+		_axisRay = axisRay;
 	}
 	
-	public Sphere(double radius, Point3D center){
+	public Cylinder(double radius, Ray axisRay){
 		_radius = radius;
-		_center = center;
+		_axisRay = axisRay;
 	}
-	
+		
 	//Copy constructor
-	public Sphere(Sphere other){
+	public Cylinder(Cylinder other){
 		_radius = other._radius;
-		_center = other._center;
+		_axisRay = other._axisRay;
 	}
 		
 	//Getters
 	//radius getter is unnecessary as it's inherited from RadialGeometry
-	public Point3D getCenter(){
-		return new Point3D(_center);
+	public Ray getAxisRay(){
+		return new Ray(_axisRay);
 	}
-		
+	
 	//Setters
 	//radius setter is unnecessary as it's inherited from RadialGeometry
-	public void setCenter(Point3D center){
-		_center = center;
+	public void setAxisRay(Ray axisRay){
+		_axisRay = axisRay;
 	}
 
 	public List<Point3D> findIntersection(Ray r) {

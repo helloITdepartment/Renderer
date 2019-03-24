@@ -1,30 +1,30 @@
-package geomentries;
+package geometries;
 import java.util.List;
 
 import primitives.*;
 
-public class Plane implements Geometry{
+public class Triangle implements Geometry{
 	Point3D _p1;
 	Point3D _p2;
 	Point3D _p3;
 	
 	//Constructors
 	//Empty constructor
-	public Plane(){
+	public Triangle(){
 		_p1 = new Point3D();
 		_p2 = new Point3D();
 		_p3 = new Point3D();
 	}
 			
 	//Parameterized constructor
-	public Plane(Point3D p1, Point3D p2, Point3D p3){
+	public Triangle(Point3D p1, Point3D p2, Point3D p3){
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
 	}
 		
 	//Copy constructor
-	public Plane(Plane other){
+	public Triangle(Triangle other){
 		_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
@@ -56,8 +56,10 @@ public class Plane implements Geometry{
 		_p3 = p3;
 	}
 
+	@Override
 	public List<Point3D> findIntersection(Ray r) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

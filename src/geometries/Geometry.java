@@ -1,4 +1,4 @@
-package geomentries;
+package geometries;
 import java.util.*;
 import primitives.*;
 
