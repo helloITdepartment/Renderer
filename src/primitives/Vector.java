@@ -53,6 +53,11 @@ public class Vector{
 		return new Vector(newHead);
 	}
 
+	//Takes in a double and scales the vector up or down accordingly
+	public Vector scale(double d){
+		return new Vector(_head.getX().getCoordinate()*d, _head.getY().getCoordinate()*d, _head.getZ().getCoordinate()*d);
+	}
+	
 	//Computes the cross product by multiplying and subtracting the appropriate values
 	public Vector crossProduct(Vector other){
 		Coordinate newX = new Coordinate((_head.getY().getCoordinate() * other.getHead().getZ().getCoordinate()) - (_head.getZ().getCoordinate() * other.getHead().getY().getCoordinate()));

@@ -61,6 +61,18 @@ public class VectorTests {
 	@Test
 	public void testScalling(){
 		Vector v = new Vector(7.7, 0.0, 0.032);
+		Vector newV = v.scale(0.0);
+		
+		assertEquals("Failed under scaling by zero", 0.0, newV.length(), 1e-10);
+		
+		newV = v.scale(-1.0);
+		assertEquals("Failed under vector reversal", 1, newV.compareTo(new Vector(-7.7, 0.0, -0.032)), 1e-10);
+		
+		newV = v.scale(2.0);
+		assertEquals("Failed under stretching of vector", 1, newV.compareTo(new Vector(7.7*2.0, 0.0, 0.032*2.0)), 1e-10);
+		
+		newV = v.scale(0.5);
+		assertEquals("Failed under shrinking of vector", 1, newV.compareTo(new Vector(7.7/2.0, 0.0, 0.032/2.0)), 1e-10);
 	}
 	
 	@Test
