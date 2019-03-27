@@ -19,12 +19,12 @@ public class Coordinate {
 		_coordinate = other._coordinate;
 	}
 	
-	//Getters
+	//Getter
 	public double getCoordinate(){
 		return _coordinate;
 	}
 	
-	//Setters
+	//Setter
 	public void setCoordinate(double coord){
 		_coordinate = coord;
 	}
