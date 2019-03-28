@@ -126,8 +126,8 @@ public class VectorTests {
 		assertEquals("Z coordinate failed under cross product with orthogonal vector", 0.0, v.crossProduct(newV).getHead().getZ().getCoordinate(), 1e-10);
 
 		 newV = new Vector(-4.4, 5.6, 6.6);
-		 assertEquals("X coordinate failed under cross product with orthogonal vector", -0.1792, v.crossProduct(newV).getHead().getX().getCoordinate(), 1e-10);
-		 assertEquals("Y coordinate failed under cross product with orthogonal vector", -50.9608, v.crossProduct(newV).getHead().getY().getCoordinate(), 1e-10);
-		 assertEquals("Z coordinate failed under cross product with orthogonal vector", 43.12, v.crossProduct(newV).getHead().getZ().getCoordinate(), 1e-10);
+		 assertEquals("X coordinate failed under cross product with random vector", -0.1792, v.crossProduct(newV).getHead().getX().getCoordinate(), 1e-10);
+		 assertEquals("Y coordinate failed under cross product with random vector", -50.9608, v.crossProduct(newV).getHead().getY().getCoordinate(), 1e-10);
+		 assertEquals("Z coordinate failed under cross product with random vector", 43.12, v.crossProduct(newV).getHead().getZ().getCoordinate(), 1e-10);
 	}
 }
