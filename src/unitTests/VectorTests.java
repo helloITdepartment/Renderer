@@ -10,78 +10,38 @@ public class VectorTests {
 	@Test
 	public void testAdd() {
 		Vector v = new Vector(2.5, 3.6, 1.0);
+		
 		Vector newV = v.add(new Vector(1.0, 1.0, 1.0));
-
 		assertEquals("Failed under positive addition", 1, newV.compareTo(new Vector(3.5, 4.6, 2.0)));
-		// assertEquals("X coordinate failed under positive addition", 3.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under positive addition", 4.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under positive addition", 2.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 		newV = v.add(new Vector(-1.0, -1.0, -1.0));
-
 		assertEquals("Failed under negative addition", 1, newV.compareTo(new Vector(1.5, 2.6, 0.0)));
-		// assertEquals("X coordinate failed under negative addition", 1.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under negative addition", 2.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under negative addition", 0.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 		newV = v.add(new Vector(0.0, 0.0, 0.0));
-
 		assertEquals("Failed under zero addition", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
-		// assertEquals("X coordinate failed under zero addition", 2.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under zero addition", 3.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under zero addition", 1.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 	}
 
 	@Test
 	public void testSubtract() {
 		Vector v = new Vector(2.5, 3.6, 1.0);
+		
 		Vector newV = v.subtract(new Vector(1.0, 1.0, 1.0));
-
 		assertEquals("Failed under positive subtraction", 1, newV.compareTo(new Vector(1.5, 2.6, 0.0)));
-		// assertEquals("X coordinate failed under positive subtraction", 1.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under positive subtraction", 2.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under positive subtraction", 0.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 		newV = v.subtract(new Vector(-1.0, -1.0, -1.0));
-
 		assertEquals("Failed under negative subtraction", 1, newV.compareTo(new Vector(3.5, 4.6, 2.0)));
-		// assertEquals("X coordinate failed under negative subtraction", 3.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under negative subtraction", 4.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under negative subtraction", 2.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 		newV = v.subtract(new Vector(0.0, 0.0, 0.0));
-
 		assertEquals("Failed under zero subtraction", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
-		// assertEquals("X coordinate failed under zero subtraction", 2.5,
-		// newV.getHead().getX().getCoordinate(), 1e-10);
-		// assertEquals("Y coordinate failed under zero subtraction", 3.6,
-		// newV.getHead().getY().getCoordinate(), 1e-10);
-		// assertEquals("Z coordinate failed under zero subtraction", 1.0,
-		// newV.getHead().getZ().getCoordinate(), 1e-10);
 
 	}
 
 	@Test
 	public void testScaling() {
 		Vector v = new Vector(7.7, 0.0, 0.032);
+		
 		Vector newV = v.scale(0.0);
-
 		assertEquals("Failed under scaling by zero", 0.0, newV.length(), 1e-10);
 
 		newV = v.scale(-1.0);
@@ -97,8 +57,8 @@ public class VectorTests {
 	@Test
 	public void testDotProduct() {
 		Vector v = new Vector(3.4, 5.6, 7.8);
+		
 		Vector newV = new Vector(0.9, 4.3, 2.1);
-
 		assertEquals("Failed under normal dot product", 43.52, v.dotProduct(newV), 1e-10);
 
 		newV = new Vector(-0.9, -4.3, -2.1);
