@@ -34,7 +34,6 @@ public class VectorTests {
 
 		newV = v.subtract(new Vector(0.0, 0.0, 0.0));
 		assertEquals("Failed under zero subtraction", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
-
 	}
 
 	@Test
