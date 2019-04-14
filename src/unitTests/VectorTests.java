@@ -90,7 +90,7 @@ public class VectorTests {
 	}
 
 	@Test
-	public void testNormalize() {
+	 public void testNormalize() {
 		Vector v = new Vector(7.7, 0.0, 0.032);
 		Vector newV = v.normalize();
 

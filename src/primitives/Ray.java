@@ -39,5 +39,14 @@ public class Ray{
 	public void setDirection(Vector direction){
 		_direction = direction;
 	}
+	
+	public int compareTo(Ray other){
+		//A boolean checking to see whether the sources match
+		boolean sourceMatches = (_source.compareTo(other.getSource()) == 1);
+		//A boolean checking to see whether the directions match
+		boolean directionMatches = (_direction.compareTo(other.getDirection()) == 1);
+		//returns 1 if both source and direction match, 0 otherwise
+		return ((sourceMatches && directionMatches) ? 1 : 0);
+	}
 
 }
