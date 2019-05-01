@@ -1,5 +1,6 @@
 package geometries;
 import java.util.List;
+import java.util.ArrayList;
 
 import primitives.*;
 
@@ -58,6 +59,7 @@ public class Plane implements Geometry{
 
 	public List<Point3D> findIntersection(Ray r) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Point3D> listToReturn = new ArrayList<>();
+		return listToReturn;
 	}
 }

@@ -1,4 +1,5 @@
 package geometries;
+import java.util.ArrayList;
 import java.util.List;
 
 import primitives.*;
@@ -59,7 +60,8 @@ public class Triangle implements Geometry{
 	@Override
 	public List<Point3D> findIntersection(Ray r) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Point3D> listToReturn = new ArrayList<>();
+		return listToReturn;
 	}
 
 }
