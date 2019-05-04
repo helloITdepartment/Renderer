@@ -20,6 +20,11 @@ public class Point3D extends Point2D{
 		super(x, y);
 		_z = z;
 	}
+	
+	public Point3D(double x, double y, double z) {
+		super(new Coordinate(x), new Coordinate(y));
+		_z = new Coordinate(z);
+	}
 		
 	//Copy constructor
 	public Point3D(Point3D other){
@@ -52,7 +57,7 @@ public class Point3D extends Point2D{
 		}
 	}
 
-	//Adds corresponding x, y, and z values and returns a new Point3D
+	//Vector addition. Adds corresponding x, y, and z values and returns a new Point3D
 	public Point3D add(Vector v){
 		Coordinate newX = super.getX().add(v.getHead().getX());
 		Coordinate newY = super.getY().add(v.getHead().getY());
@@ -61,12 +66,30 @@ public class Point3D extends Point2D{
 		return new Point3D(newX, newY, newZ);
 	}
 	
-	//Subtracts corresponding x, y, and z values and returns a new Point3D
+	//Point addition. Adds corresponding x, y, and z values and returns a new Point3D
+	public Point3D add(Point3D other){
+		Coordinate newX = getX().add(other.getX());
+		Coordinate newY = getY().add(other.getY());
+		Coordinate newZ = getZ().add(other.getZ());
+		
+		return new Point3D(newX, newY, newZ);
+	}
+	
+	//Vector subtraction. Subtracts corresponding x, y, and z values and returns a new Point3D	
 	public Point3D subtract(Vector v){
 			Coordinate newX = super.getX().subtract(v.getHead().getX());
 			Coordinate newY = super.getY().subtract(v.getHead().getY());
 			Coordinate newZ = _z.subtract(v.getHead().getZ());
 			
 			return new Point3D(newX, newY, newZ);
-		}
+	}
+	
+	//Point subtraction. Subtracts corresponding x, y, and z values and returns a new Point3D
+	public Point3D subtract(Point3D other){
+			Coordinate newX = getX().subtract(other.getX());
+			Coordinate newY = getY().subtract(other.getY());
+			Coordinate newZ = getZ().subtract(other.getZ());
+			
+			return new Point3D(newX, newY, newZ);
+	}
 }
