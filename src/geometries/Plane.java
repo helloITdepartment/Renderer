@@ -23,6 +23,10 @@ public class Plane implements Geometry{
 		_p2 = p2;
 		_p3 = p3;
 	}
+	
+	public Plane(Point3D point, Vector normal) {
+		
+	}
 		
 	//Copy constructor
 	public Plane(Plane other){

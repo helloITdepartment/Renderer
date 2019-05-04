@@ -46,6 +46,29 @@ public class Sphere extends RadialGeometry implements Geometry{
 	public List<Point3D> findIntersection(Ray r) {
 		// TODO Auto-generated method stub
 		List<Point3D> listToReturn = new ArrayList<>();
+		
+		Vector l = new Vector(_center.subtract(new Point3D()));
+		double tM = l.dotProduct(r.getDirection());
+		double d = Math.sqrt(l.length()*l.length() - tM*tM);
+		
+		if(d > _radius) {
+			return new ArrayList<>();
+		}
+		
+		double tH = Math.sqrt(_radius*_radius - d*d);
+		double t1 = tM-tH;
+		double t2 = tM+tH;
+		
+		if(t1 >0) {
+			Point3D p1 = new Point3D().add(r.getDirection().normalize().scale(t1));
+			listToReturn.add(p1);
+		}
+		
+		if(t2 >0) {
+			Point3D p2 = new Point3D().add(r.getDirection().normalize().scale(t2));
+			listToReturn.add(p2);
+		}
+		
 		return listToReturn;
 	}
 }

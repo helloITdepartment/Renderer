@@ -58,6 +58,7 @@ public class Triangle implements Geometry{
 	}
 	
 	private Vector findNormal(){
+		//Vector v1 = new Vector ()
 		return new Vector();
 	}
 

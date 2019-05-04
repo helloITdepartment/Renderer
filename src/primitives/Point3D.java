@@ -92,4 +92,8 @@ public class Point3D extends Point2D{
 			
 			return new Point3D(newX, newY, newZ);
 	}
+	
+	public String toString() {
+		return ("X: " + _x + " Y: " + _y + " Z: " + _z);
+	}
 }

@@ -41,4 +41,8 @@ public class Coordinate {
 		return new Coordinate(_coordinate - other._coordinate);
 	}
 	
+	public String toString() {
+		return "" + _coordinate;
+	}
+	
 }
