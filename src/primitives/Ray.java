@@ -14,7 +14,7 @@ public class Ray{
 	//Parameterized constructor
 	public Ray(Point3D source, Vector direction){
 		_source = source;
-		_direction = direction;
+		_direction = direction.normalize();
 	}	
 	
 	//Copy constructor

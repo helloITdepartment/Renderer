@@ -8,6 +8,7 @@ public class Plane implements Geometry{
 	Point3D _p1;
 	Point3D _p2;
 	Point3D _p3;
+	Vector _normal;
 	
 	//Constructors
 	//Empty constructor
@@ -15,6 +16,7 @@ public class Plane implements Geometry{
 		_p1 = new Point3D();
 		_p2 = new Point3D();
 		_p3 = new Point3D();
+		_normal = new Vector();
 	}
 			
 	//Parameterized constructor
@@ -22,10 +24,7 @@ public class Plane implements Geometry{
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
-	}
-	
-	public Plane(Point3D point, Vector normal) {
-		
+		_normal = new Vector(p2.subtract(p1)).crossProduct(new Vector(p3.subtract(p1))).normalize();
 	}
 		
 	//Copy constructor
@@ -64,6 +63,19 @@ public class Plane implements Geometry{
 	public List<Point3D> findIntersection(Ray r) {
 		// TODO Auto-generated method stub
 		List<Point3D> listToReturn = new ArrayList<>();
+		
+		double denominator = _normal.dotProduct(r.getDirection());
+		
+		if(denominator == 0) {
+			return listToReturn;
+		}
+		
+		double t = (new Vector(_p1.subtract(r.getSource())).dotProduct(_normal))/denominator;
+		
+		Point3D intersectedPoint = new Point3D(r.getSource().add(r.getDirection().scale(t)));
+		
+		listToReturn.add(intersectedPoint);
+		
 		return listToReturn;
 	}
 }
