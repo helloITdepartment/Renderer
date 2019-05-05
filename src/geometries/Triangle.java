@@ -5,6 +5,7 @@ import java.util.List;
 import primitives.*;
 
 public class Triangle implements Geometry{
+	//three points representing the three vertices of the triangle
 	Point3D _p1;
 	Point3D _p2;
 	Point3D _p3;
@@ -12,6 +13,7 @@ public class Triangle implements Geometry{
 	//Constructors
 	//Empty constructor
 	public Triangle(){
+		//default constructor setting the points to default 3d points
 		_p1 = new Point3D();
 		_p2 = new Point3D();
 		_p3 = new Point3D();
@@ -19,42 +21,50 @@ public class Triangle implements Geometry{
 			
 	//Parameterized constructor
 	public Triangle(Point3D p1, Point3D p2, Point3D p3){
-		_p1 = p1;
+		//sets the three vertices to the three parameters passed
+_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
 	}
 		
 	//Copy constructor
 	public Triangle(Triangle other){
-		_p1 = other._p1;
+		//copies the vertices of the passed triangle onto the object it is called on
+_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
 	}
 		
 	//Getters
 	public Point3D getP1(){
-		return new Point3D(_p1);
+		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+return new Point3D(_p1);
 	}
 	
 	public Point3D getP2(){
-		return new Point3D(_p2);
+		//Returns new Point3D with the same value as our _p2, so that changes made at the callsite wont affect our variables
+return new Point3D(_p2);
 	}
 	
 	public Point3D getP3(){
-		return new Point3D(_p3);
+		//Returns new Point3D with the same value as our _p3, so that changes made at the callsite wont affect our variables
+return new Point3D(_p3);
 	}
 	
 	//Setters
 	public void setP1(Point3D p1){
-		_p1 = p1;
+		//allows for setting of vertex 1 from passed parameter
+_p1 = p1;
 	}
 	
 	public void setP2(Point3D p2){
-		_p2 = p2;
+		//allows for setting of vertex 2 from passed parameter
+_p2 = p2;
 	}
 	
 	public void setP3(Point3D p3){
-		_p3 = p3;
+		//allows for setting of vertex 3 from passed parameter
+_p3 = p3;
 	}
 
 	@Override
