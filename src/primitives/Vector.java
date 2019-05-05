@@ -27,6 +27,7 @@ public class Vector{
 
 	//Getters
 	public Point3D getHead(){
+		//Returns new Point3D with the same value as our _head, so that changes made at the callsite wont affect our variables
 		return new Point3D(_head);
 	}
 
