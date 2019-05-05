@@ -17,10 +17,10 @@ public class Coordinate {
 	}
 
 	//Copy constructor
-    public Coordinate(Coordinate other){
-    // sets one point of another coordinate to a different coordinate.
-        _coordinate = other._coordinate;
-    }
+	public Coordinate(Coordinate other){
+		// sets one point of another coordinate to a different coordinate.
+		_coordinate = other._coordinate;
+	}
 
 	//Getter
 	public double getCoordinate(){
