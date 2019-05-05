@@ -1,6 +1,7 @@
 package primitives;
 
 public class Vector{
+	//A data member to represent the entire vector, assumed to start at the origin and end at _head
 	Point3D _head;
 
 	//Constructors
