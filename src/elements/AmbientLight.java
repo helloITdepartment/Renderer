@@ -34,8 +34,17 @@ public class AmbientLight {
 		//Returns new double with the same value as our kA, so that changes made at the callsite wont affect our variables
 		return new Double(_kA);
 	}
-	//Setters
 	
+	//Setters
+	public void setColor(Color other){
+		// setting protected member Color other
+		_color = other;
+	}
+	
+	public void setkA(double other) {
+		// setting protected member double _kA
+		_kA = other;
+	}
 	
 	public Color getIntensity() {
 		//Testing to make sure this got sent to the right branch
