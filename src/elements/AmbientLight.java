@@ -2,6 +2,7 @@ package elements;
 
 import java.awt.Color;
 
+//A class representing a light that ambiently lights a scene, like a light bulb or the sun would
 public class AmbientLight {
 	//The color of the ambient light
 	Color _color;
