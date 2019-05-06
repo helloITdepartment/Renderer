@@ -31,9 +31,12 @@ public class AmbientLight {
 	}
 	
 	public Double getkA() {
+		//Returns new double with the same value as our kA, so that changes made at the callsite wont affect our variables
 		return new Double(_kA);
 	}
 	//Setters
+	
+	
 	public Color getIntensity() {
 		//Testing to make sure this got sent to the right branch
 	}
