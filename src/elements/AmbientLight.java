@@ -5,7 +5,7 @@ import java.awt.Color;
 public class AmbientLight {
 	//The color of the ambient light
 	Color _color;
-	//The intensity of the ambient light
+	//The intensity of the ambient light, ranging from 0.0 to 1.0
 	double _kA;
 
 	
@@ -37,16 +37,21 @@ public class AmbientLight {
 	
 	//Setters
 	public void setColor(Color other){
-		// setting protected member Color other
+		// allows setting of protected member _color
 		_color = other;
 	}
 	
 	public void setkA(double other) {
-		// setting protected member double _kA
+		// allows setting of protected member _kA
 		_kA = other;
 	}
 	
+	//Returns a version of _color, where each component is scaled by _kA, representing the color
 	public Color getIntensity() {
-		//Testing to make sure this got sent to the right branch
+		int red = (int)(_color.getRed()*_kA);
+		int green = (int)(_color.getGreen()*_kA);
+		int blue = (int)(_color.getBlue()*_kA);
+		
+		return new Color(red, green, blue);
 	}
 }
