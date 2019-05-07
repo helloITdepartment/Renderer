@@ -10,6 +10,7 @@ public class Camera {
 	Vector _vRight;
 	
 	//Constructors
+	//Default Constructor
 	public Camera() {
 		_p0 = new Point3D();
 		_vUp = new Vector(0.0, 1.0, 0.0);
@@ -17,10 +18,24 @@ public class Camera {
 		_vRight = new Vector(1.0, 0.0, 0.0);
 	}
 	
-	//3, 3, 0, 0, 1, 9, 9
+	//Parameterized Constructor
+	public Camera(Point3D p0, Vector vUp, Vector vTo, Vector vRight) {
+		_p0 = p0;
+		_vUp = vUp;
+		_vTo = vTo;
+		_vRight = _vRight;
+	}
+	
+	//Copy Constructor
+	public Camera(Camera other) {
+		_p0 = other._p0;
+		_vUp = other._vUp;
+		_vTo = other._vTo;
+		_vRight = other._vRight;
+	}
+	
 	//Method that will return the ray that would pass from the camera through a given pixel
 	//pixelsInXDirection and pixelsInYDirection are the number of pixels in the horizontal and vertical directions respectively
-	//
 	public Ray constructRayThroughPixel(int pixelsInXDirection, int pixelsInYDirection, double xCoordinate, double yCoordinate, double screenDistance, double screenWidth, double screenHeight) {
 		
 		System.out.println();
