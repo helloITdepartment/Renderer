@@ -1,25 +1,23 @@
-package renderer;
+package unitTests;
 
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import geometries.*;
+import primitives.*;
+import elements.*;
+import renderer.*;
+import static org.junit.Assert.*;
+import org.junit.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.awt.Color;
+
 
 import java.awt.*;
 
 import static org.junit.Assert.*;
 
-@RunWith(Arquillian.class)
 public class ImageWriterTest {
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addClass(ImageWriter.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-    }
 
     @Test
     public void writeToImageTest() {
@@ -31,7 +29,7 @@ public class ImageWriterTest {
     @Test
     // write pixel test 1, set every 50th pixel to white
     public void writePixel1Test() {
-         ImageWriter testImage = new ImageWriter("testPixel1", 150, 150, 500, 500);
+         ImageWriter testImage = new ImageWriter("testPixel1", 500, 500, 500, 500);
          for(int i =0; i < 500; i++) {
              for(int j = 0; j < 500; j++) {
                  // if i or j are multiples of 50, make the pixel at the x,y coordinate white, if not, make the pixel black
@@ -54,7 +52,7 @@ public class ImageWriterTest {
     // write pixel test 2, set every 50th pixel to white
     public void writePixel2Test() {
 
-        ImageWriter testImage = new ImageWriter("testPixel2", 150, 150, 500, 500);
+        ImageWriter testImage = new ImageWriter("testPixel2", 500, 500, 500, 500);
         // color array
         int [] rgbArray = new int[3];
         for(int i =0; i < 500; i++) {
@@ -83,7 +81,7 @@ public class ImageWriterTest {
     @Test
     // write pixel test 3, set every 50th pixel to white
     public void writePixel3() {
-         ImageWriter testImage = new ImageWriter("testPixel3", 150, 150, 500, 500);
+         ImageWriter testImage = new ImageWriter("testPixel3", 500, 500, 500, 500);
         for(int i =0; i < 500; i++) {
             for(int j = 0; j < 500; j++) {
                 // if i or j are multiples of 50, make the pixel at the x,y coordinate white, if not, make the pixel black
