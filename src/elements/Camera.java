@@ -23,7 +23,7 @@ public class Camera {
 		_p0 = p0;
 		_vUp = vUp;
 		_vTo = vTo;
-		_vRight = _vRight;
+		_vRight = vRight;
 	}
 	
 	//Copy Constructor
