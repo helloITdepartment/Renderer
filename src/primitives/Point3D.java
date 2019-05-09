@@ -104,6 +104,16 @@ public class Point3D extends Point2D{
 		return new Point3D(newX, newY, newZ);
 	}
 
+	//Calculates the distance between two points by using the extended pythagorean formula
+	public double distanceTo(Point3D other) {
+		//Finds the difference between, corresponding x, y, and z values
+		double xDifference = _x.subtract(other.getX()).getCoordinate();
+		double yDifference = _y.subtract(other.getY()).getCoordinate();
+		double zDifference = _z.subtract(other.getZ()).getCoordinate();
+		//Squares them, sums them, and returns the square root
+		return Math.sqrt(xDifference*xDifference + yDifference*yDifference + zDifference*zDifference);
+	}
+	
 	public String toString() {
 		//A simple toString method to help with debugging
 		return ("X: " + _x + " Y: " + _y + " Z: " + _z);
