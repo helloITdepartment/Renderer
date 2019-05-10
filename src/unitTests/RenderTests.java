@@ -22,23 +22,37 @@ public class RenderTests {
 	
 	@Test
 	public void renderTest() {
-		AmbientLight ambientLight = new AmbientLight(new Color(202, 22, 152), 1.0);
-//		Sphere sphere = new Sphere(20.0, new Point3D(0.0, 0.0, -30.0));
-		Triangle triangle = new Triangle(new Point3D(0, 1, -1), new Point3D(-1, -1, -1), new Point3D(1, -1, -1));
+		//Sets up a "sun" with white light
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		//Creates a sphere and some triangles around it 
+		Sphere sphere = new Sphere(3.0, new Point3D(0.0, 0.0, -10.0));
+		Triangle triangle1 = new Triangle(new Point3D(-6.75, 6.75, -10), new Point3D(-6.75, 0, -10), new Point3D(0, 6.75, -10));
+		Triangle triangle2 = new Triangle(new Point3D(0, 6.75, -10), new Point3D(6.75, 6.75, -10), new Point3D(6.75, 0, -10));
+		Triangle triangle3 = new Triangle(new Point3D(6.75, 0, -10), new Point3D(6.75, -6.75, -10), new Point3D(0, -6.75, -10));
+		Triangle triangle4 = new Triangle(new Point3D(0, -6.75, -10), new Point3D(-6.75, -6.75, -10), new Point3D(-6.75, 0, -10));
+		//Creates a list of geometries to feed into our Scene instance
 		List<Geometry> list = new ArrayList<Geometry>();
-		list.add(triangle);
-//		Ray r = new Ray(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, 0.0, -1.0));
-//		System.out.println(sphere.findIntersection(r));
+		//Adds the sphere and triangles to the list
+		list.add(sphere);
+		list.add(triangle1);
+		list.add(triangle2);
+		list.add(triangle3);
+		list.add(triangle4);
+		//Instantiates a new Camera with default values (point at the origin, facing down the negative z axis)
 		Camera camera = new Camera();
-		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, list, camera, 1.0);
-		//Width, height, nx, ny
-		//Width and height of file, 
-		ImageWriter imageWriter = new ImageWriter("RenderTest", 100, 100, 100, 100);
-		
+		//Creates a scene to hold our universe
+		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, list, camera, 30.0);
+		//Creates an ImageWriter instance to help write down what our camera sees
+		ImageWriter imageWriter = new ImageWriter("RenderTest", 500, 500, 100, 100);
+		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 		
+		
+		//Records what the camera sees
 		render.renderImage();
+		//Overlays a grid to help visualization
 		render.printGrid(50);
+		//Prints it all to a file
 		imageWriter.writeToImage();
 	}
 }

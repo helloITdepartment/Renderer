@@ -57,8 +57,10 @@ public class Render {
 	public void renderImage() {
 		for(int i = 0; i < _imageWriter.getWidth(); i++) {
 			for(int j = 0; j < _imageWriter.getHeight(); j++) {
-				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), i, j, _scene.getScreenDistance(), _imageWriter.getWidth(), _imageWriter.getHeight());
-				System.out.println(r.getDirection().getHead());
+				
+//				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getNx(), _imageWriter.getNy(), i, j, _scene.getScreenDistance(), _imageWriter.getWidth(), _imageWriter.getHeight());
+				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+//				System.out.println(r.getDirection().getHead());
 				
 				List<Point3D> pointsIntersected = getSceneRayIntersections(r);
 				if (pointsIntersected.isEmpty()) {

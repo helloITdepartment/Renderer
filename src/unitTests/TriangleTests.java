@@ -14,7 +14,7 @@ public class TriangleTests {
 		//Testing a ray hitting the Triangle orthogonally
 		Point3D p1 = new Point3D(1, 1, -5);
 		Point3D p2 = new Point3D(-2, 2, -5);
-		Point3D p3 = new Point3D(-3, -3, -5);
+		Point3D p3 = new Point3D(0, -4, -5);
 		Triangle testTriangle = new Triangle(p1, p2, p3);
 
 		Point3D source = new Point3D();
@@ -23,11 +23,10 @@ public class TriangleTests {
 		Point3D intersection = testTriangle.findIntersection(testRay).get(0);
 		System.out.println(intersection);
 
-		//Testing the ray hitting the Triangle at an angle
+		//Testing the ray missing Triangle entirely (Triangle is off to the side, but plane is in front)
 
 		testRay.setDirection(new Vector(4, -2, -1));
-		intersection = testTriangle.findIntersection(testRay).get(0);
-		System.out.println(intersection);
+		assertTrue("Failed under ray missing Triangle entirely (Triangle is off to the side, but plane is in front)",testTriangle.findIntersection(testRay).isEmpty());
 
 		//Testing the ray missing the Triangle (Triangle is parallel to ray)
 		testRay.setDirection(new Vector(0, 0, -1));

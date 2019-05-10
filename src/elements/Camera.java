@@ -49,7 +49,7 @@ public class Camera {
 		Vector leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*ratioX) - (ratioX/2.0));
 		//System.out.println(leftHandSide.toString());
 		
-		Vector rightHandSide = _vUp.scale(((yCoordinate-(pixelsInYDirection/2.0))*ratioY) - (ratioY/2.0));
+		Vector rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*ratioY) - (ratioY/2.0));
 		//System.out.println(rightHandSide.toString());
 		
 		
