@@ -18,7 +18,8 @@ public class Ray{
 	public Ray(Point3D source, Vector direction){
 		//sets source and direction to given source and direction
 		_source = source;
-		_direction = direction.normalize();
+		_direction = direction;
+//		_direction = direction.normalize();
 	}	
 	
 	//Copy constructor
@@ -38,6 +39,7 @@ public class Ray{
 		//Returns new Vector with the same value as our _direction, so that changes made at the callsite wont affect our variables
 		return new Vector(_direction);
 	}
+	
 	//Setters
 	public void setSource(Point3D source){
 		//allows for the setting of protected data member source passed as a parameter

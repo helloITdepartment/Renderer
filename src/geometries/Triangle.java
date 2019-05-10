@@ -86,23 +86,23 @@ public class Triangle implements Geometry{
 			Vector v11 = new Vector(_p1);
 			Vector v12 = new Vector(_p2);
 			Vector n1 = v11.crossProduct(v12).scale(1/(v11.crossProduct(v12).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yeilding us either 1 or -1, 
+			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
 			//depending if it was positive or negative to begin with, respectively
 			double sign1 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n1))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n1)));
 
 			//Side 2
-			Vector v21 = new Vector(_p1);
-			Vector v22 = new Vector(_p2);
+			Vector v21 = new Vector(_p2);
+			Vector v22 = new Vector(_p3);
 			Vector n2 = v21.crossProduct(v22).scale(1/(v21.crossProduct(v22).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yeilding us either 1 or -1, 
+			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
 			//depending if it was positive or negative to begin with, respectively
 			double sign2 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n2))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n2)));
 
 			//Side 3
-			Vector v31 = new Vector(_p1);
-			Vector v32 = new Vector(_p2);
+			Vector v31 = new Vector(_p3);
+			Vector v32 = new Vector(_p1);
 			Vector n3 = v31.crossProduct(v32).scale(1/(v31.crossProduct(v32).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yeilding us either 1 or -1, 
+			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
 			//depending if it was positive or negative to begin with, respectively
 			double sign3 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n3))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n3)));
 

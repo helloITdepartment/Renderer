@@ -47,8 +47,8 @@ public class Sphere extends RadialGeometry implements Geometry{
 		// TODO Auto-generated method stub
 		List<Point3D> listToReturn = new ArrayList<>();
 		
-		Vector l = new Vector(_center.subtract(new Point3D()));
-		double tM = l.dotProduct(r.getDirection());
+		Vector l = new Vector(_center.subtract(new Point3D(0,0,0)));
+		double tM = l.dotProduct(r.getDirection().normalize());
 		double d = Math.sqrt(l.length()*l.length() - tM*tM);
 		
 		if(d > _radius) {
