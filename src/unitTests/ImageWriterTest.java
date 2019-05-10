@@ -22,7 +22,7 @@ public class ImageWriterTest {
     @Test
     public void writeToImageTest() {
         // set test image of type Image Writer to a height and width of 500, with 500 pixels horizontally and vertically
-        ImageWriter testImage = new ImageWriter("rstlne", 150, 150, 500, 500);
+        ImageWriter testImage = new ImageWriter("rstlne", 500, 500, 500, 500);
         testImage.writeToImage();
     }
 
