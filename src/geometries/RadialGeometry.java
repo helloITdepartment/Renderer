@@ -1,6 +1,12 @@
 package geometries;
 
-public class RadialGeometry {
+import java.util.List;
+
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
+
+public abstract class RadialGeometry extends Geometry{
 	//radius determines the radius of the shape for which the ray is going to shine through
 	double _radius;
 
@@ -34,5 +40,9 @@ public class RadialGeometry {
 		//allows access to the radius data member
 		_radius = radius;
 	}
+	
+	public abstract Vector getNormal(Point3D p);
+
+	public abstract List<Point3D> findIntersection(Ray r);
 
 }

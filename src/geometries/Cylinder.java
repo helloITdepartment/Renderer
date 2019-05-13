@@ -4,7 +4,7 @@ import java.util.List;
 
 import primitives.*;
 
-public class Cylinder extends RadialGeometry implements Geometry{
+public class Cylinder extends RadialGeometry{
 	//Ray representing the central axis around which the cylinder revolves, at a radius inherited from RadialGeometry
 	Ray _axisRay;
 
@@ -56,5 +56,9 @@ public class Cylinder extends RadialGeometry implements Geometry{
 		//Returns a (possibly empty) list of points where a given Ray r would intersect our Cylinder
 		List<Point3D> listToReturn = new ArrayList<>();
 		return listToReturn;
+	}
+	
+	public Vector getNormal(Point3D p) {
+		return new Vector();
 	}
 }
