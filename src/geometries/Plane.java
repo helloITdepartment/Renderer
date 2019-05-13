@@ -25,6 +25,7 @@ public class Plane implements Geometry{
 	//Parameterized constructor
 	public Plane(Point3D p1, Point3D p2, Point3D p3){
 		//creates a plane with three points passed in as parameters and calculates the normal vector
+		//creates a plane with three points and a normal to the plane passed in as parameters
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
@@ -42,16 +43,19 @@ public class Plane implements Geometry{
 	//Getters
 	public Point3D getP1(){
 		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+		//allows access to the p1 data member (a point on the plane)
 		return new Point3D(_p1);
 	}
 
 	public Point3D getP2(){
 		//Returns new Point3D with the same value as our _p2, so that changes made at the callsite wont affect our variables
+		//allows access to the p2 data member (a point on the plane)
 		return new Point3D(_p2);
 	}
 
 	public Point3D getP3(){
 		//Returns new Point3D with the same value as our _p3, so that changes made at the callsite wont affect our variables
+		//allows access to the p3 data member (a point on the plane)
 		return new Point3D(_p3);
 	}
 
@@ -73,6 +77,7 @@ public class Plane implements Geometry{
 
 	public List<Point3D> findIntersection(Ray r) {
 		//Initializes an empty list that will contain the point(s) of intersection, if any
+		//returns a list of intersections from the ray which is passed as a parameter
 		List<Point3D> listToReturn = new ArrayList<>();
 
 		//denominator holds the result of the dot product between the ray and the plane
@@ -88,11 +93,11 @@ public class Plane implements Geometry{
 		double t = (new Vector(_p1.subtract(r.getSource())).dotProduct(_normal))/denominator;
 
 		//We scale the Ray by t to get the point of intersection of the ray and the plane
+		//We scale t to get the point of intersection of the ray and the plane
 		Point3D intersectedPoint = new Point3D(r.getSource().add(r.getDirection().scale(t)));
 
 		//we add the new point of intersection to our list
 		listToReturn.add(intersectedPoint);
-
 		//return the list of intersections
 		return listToReturn;
 	}

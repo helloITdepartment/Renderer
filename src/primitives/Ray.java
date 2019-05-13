@@ -31,12 +31,12 @@ public class Ray{
 		
 	//Getters
 	public Point3D getSource(){
-		//Returns new Point3D with the same value as our _source, so that changes made at the callsite wont affect our variables
+		//Returns new Point3D with the same value as our _source, so that changes made at the call site wont affect our variables
 		return new Point3D(_source);
 	}
 	
 	public Vector getDirection(){
-		//Returns new Vector with the same value as our _direction, so that changes made at the callsite wont affect our variables
+		//Returns new Vector with the same value as our _direction, so that changes made at the call site wont affect our variables
 		return new Vector(_direction);
 	}
 	
