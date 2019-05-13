@@ -4,7 +4,7 @@ import java.util.List;
 
 import primitives.*;
 
-public class Triangle implements Geometry{
+public class Triangle extends Geometry{
 	//three points representing the three vertices of the triangle
 	Point3D _p1;
 	Point3D _p2;
@@ -17,14 +17,17 @@ public class Triangle implements Geometry{
 		_p1 = new Point3D();
 		_p2 = new Point3D();
 		_p3 = new Point3D();
+		_material = new Material();
 	}
 
 	//Parameterized constructor
-	public Triangle(Point3D p1, Point3D p2, Point3D p3){
+	public Triangle(Point3D p1, Point3D p2, Point3D p3, Material material){
 		//sets the three vertices to the three parameters passed
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
+		
+		_material = material;
 	}
 
 	//Copy constructor
@@ -33,6 +36,7 @@ public class Triangle implements Geometry{
 		_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
+		_material = other.getMaterial();
 	}
 
 	//Getters
@@ -50,6 +54,11 @@ public class Triangle implements Geometry{
 		//Returns new Point3D with the same value as our _p3, so that changes made at the callsite wont affect our variables
 		return new Point3D(_p3);
 	}
+	
+	public Material getMaterial(){
+		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+		return new Material(_material);
+	}
 
 	//Setters
 	public void setP1(Point3D p1){
@@ -66,6 +75,11 @@ public class Triangle implements Geometry{
 		//allows for setting of vertex 3 from passed parameter
 		_p3 = p3;
 	}
+	
+	public void setMaterial(Material material){
+		//Allows for the setting of the material data member from the passed parameters
+		_material = material;
+	}
 
 	@Override
 	public List<Point3D> findIntersection(Ray r) {
@@ -73,7 +87,7 @@ public class Triangle implements Geometry{
 		List<Point3D> listToReturn = new ArrayList<>();
 
 		//Creates a plane representing the plane that the triangle lives in
-		Plane planeEncompassingTriangle = new Plane(_p1, _p2, _p3);
+		Plane planeEncompassingTriangle = new Plane(_p1, _p2, _p3, _material);
 		//Finds the point that the ray would intersect into that plane at
 		List<Point3D> listOfPotentialPoints = planeEncompassingTriangle.findIntersection(r);
 		//if it missed the plane entirely, it has no chance of hitting the triangle and we return an empty list
@@ -114,6 +128,10 @@ public class Triangle implements Geometry{
 			//And return the list, empty or otherwise
 			return listToReturn;
 		}
+	}
+	
+	public Vector getNormal(Point3D p) {
+		return new Plane(_p1, _p2, _p3, _material).getNormal(p);
 	}
 
 }

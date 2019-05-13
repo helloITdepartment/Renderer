@@ -4,7 +4,7 @@ import java.util.List;
 
 import primitives.*;
 
-public class Sphere extends RadialGeometry implements Geometry{
+public class Sphere extends RadialGeometry{
 	Point3D _center;
 	
 	//Constructors
@@ -70,5 +70,9 @@ public class Sphere extends RadialGeometry implements Geometry{
 		}
 		
 		return listToReturn;
+	}
+	
+	public Vector getNormal(Point3D p) {
+		return new Vector((p.subtract(_center))).scale(p.distanceTo(_center));
 	}
 }

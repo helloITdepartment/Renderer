@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import primitives.*;
 
-public class Plane implements Geometry{
+public class Plane extends Geometry{
 	//Any plane can be uniquely represented by 3 points
 	Point3D _p1;
 	Point3D _p2;
@@ -20,15 +20,19 @@ public class Plane implements Geometry{
 		_p2 = new Point3D();
 		_p3 = new Point3D();
 		_normal = new Vector();
+		
+		_material = new Material();
 	}
 
 	//Parameterized constructor
-	public Plane(Point3D p1, Point3D p2, Point3D p3){
-		//creates a plane with three points passed in as parameters and calculates the normal vector
+	public Plane(Point3D p1, Point3D p2, Point3D p3, Material material){
+		//creates a plane with three points passed in as parameters and calculates the normal vector, and sets the material to the one passed in
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
-		_normal = new Vector(p2.subtract(p1)).crossProduct(new Vector(p3.subtract(p1))).normalize();
+		_normal = getNormal(p1);
+		
+		_material = material;
 	}
 
 	//Copy constructor
@@ -37,6 +41,9 @@ public class Plane implements Geometry{
 		_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
+		_normal = getNormal(_p1);
+		
+		_material = other.getMaterial();
 	}
 
 	//Getters
@@ -54,6 +61,11 @@ public class Plane implements Geometry{
 		//Returns new Point3D with the same value as our _p3, so that changes made at the callsite wont affect our variables
 		return new Point3D(_p3);
 	}
+	
+	public Material getMaterial(){
+		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+		return new Material(_material);
+	}
 
 	//Setters
 	public void setP1(Point3D p1){
@@ -69,6 +81,11 @@ public class Plane implements Geometry{
 	public void setP3(Point3D p3){
 		//Allows for the setting of the p3 data member from the passed parameters
 		_p3 = p3;
+	}
+	
+	public void setMaterial(Material material){
+		//Allows for the setting of the material data member from the passed parameters
+		_material = material;
 	}
 
 	public List<Point3D> findIntersection(Ray r) {
@@ -95,5 +112,9 @@ public class Plane implements Geometry{
 
 		//return the list of intersections
 		return listToReturn;
+	}
+	
+	public Vector getNormal(Point3D p) {
+		return new Vector(_p2.subtract(_p1)).crossProduct(new Vector(_p3.subtract(_p1))).normalize();
 	}
 }
