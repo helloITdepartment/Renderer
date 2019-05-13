@@ -15,7 +15,8 @@ public class TriangleTests {
 		Point3D p1 = new Point3D(1, 1, -5);
 		Point3D p2 = new Point3D(-2, 2, -5);
 		Point3D p3 = new Point3D(0, -4, -5);
-		Triangle testTriangle = new Triangle(p1, p2, p3);
+		Material material = new Material();
+		Triangle testTriangle = new Triangle(p1, p2, p3, material);
 
 		Point3D source = new Point3D();
 		Vector direction = new Vector(0,0,-1);
@@ -33,7 +34,7 @@ public class TriangleTests {
 		p1 = new Point3D(-1, 0, -4);
 		p2 = new Point3D(3, 0, -5);
 		p3 = new Point3D(0, 0, 0);
-		testTriangle = new Triangle(p1, p2, p3);
+		testTriangle = new Triangle(p1, p2, p3, material);
 		assertTrue("Failed under ray missing Triangle entirely (Triangle is parallel to ray)",testTriangle.findIntersection(testRay).isEmpty());
 
 		//Testing the ray missing the Triangle (Triangle is behind ray)
@@ -41,6 +42,27 @@ public class TriangleTests {
 		p2 = new Point3D(-2, 2, 5);
 		p3 = new Point3D(-3, -3, 5);
 		assertTrue("Failed under ray missing Triangle entirely (Triangle is behind ray)",testTriangle.findIntersection(testRay).isEmpty());
+	}
+	
+	@Test
+	public void testGetNormal() {
+		
+		//Testing when triangle is perpendicular to the viewplane
+		Point3D p1 = new Point3D(1, 1, -5);
+		Point3D p2 = new Point3D(-2, 2, -5);
+		Point3D p3 = new Point3D(-3, -3, -5);
+		Material material = new Material();
+		Triangle triangle = new Triangle(p1, p2, p3, material);
+		//Expected result is a vector pointing from the triangle straight back in the direction of the camera
+		Vector expectedResult = new Vector(0, 0, 1);
+		assertTrue("Failed where plane is perpendicular to camera (normal should be (0,0,1))", triangle.getNormal(p1).compareTo(expectedResult) == 1);		
+		
+		p1 = new Point3D(-1, 1, -1);
+		p2 = new Point3D(1, 0, -2);
+		p3 = new Point3D(-1, -1, -3);
+		triangle = new Triangle(p1, p2, p3, material);
+		expectedResult = new Vector(0, 4, -4).scale(1/Math.sqrt(32.0));
+		assertTrue("Failed where plane is tilted (normal should be (0, ~0.7071. ~-0.7071))", triangle.getNormal(p1).compareTo(expectedResult) == 1);
 	}
 
 }

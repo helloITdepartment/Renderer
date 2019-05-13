@@ -5,6 +5,7 @@ import java.util.List;
 import primitives.*;
 
 public class Sphere extends RadialGeometry{
+	//Center of the sphere. Radius is given by superclass, RadialGeometry
 	Point3D _center;
 	
 	//Constructors
@@ -12,23 +13,27 @@ public class Sphere extends RadialGeometry{
 	public Sphere(){
 		super();
 		_center = new Point3D();
+		_material = new Material();
 	}
 	
 	//Parameterized constructors
-	public Sphere(Point3D center){
+	public Sphere(Point3D center, Material material){
 		super();
 		_center = center;
+		_material = material;
 	}
 	
-	public Sphere(double radius, Point3D center){
+	public Sphere(double radius, Point3D center, Material material){
 		_radius = radius;
 		_center = center;
+		_material = material;
 	}
 	
 	//Copy constructor
 	public Sphere(Sphere other){
 		_radius = other._radius;
 		_center = other._center;
+		_material = other.getMaterial();
 	}
 		
 	//Getters
@@ -36,11 +41,19 @@ public class Sphere extends RadialGeometry{
 	public Point3D getCenter(){
 		return new Point3D(_center);
 	}
+	
+	public Material getMaterial() {
+		return new Material(_material);
+	}
 		
 	//Setters
 	//radius setter is unnecessary as it's inherited from RadialGeometry
 	public void setCenter(Point3D center){
 		_center = center;
+	}
+	
+	public void setMaterial(Material material) {
+		_material = material;
 	}
 
 	public List<Point3D> findIntersection(Ray r) {

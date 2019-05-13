@@ -25,11 +25,18 @@ public class RenderTests {
 		//Sets up a "sun" with white light
 		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
 		//Creates a sphere and some triangles around it 
-		Sphere sphere = new Sphere(3.0, new Point3D(0.0, 0.0, -10.0));
-		Triangle triangle1 = new Triangle(new Point3D(-6.75, 6.75, -10), new Point3D(-6.75, 0, -10), new Point3D(0, 6.75, -10));
-		Triangle triangle2 = new Triangle(new Point3D(0, 6.75, -10), new Point3D(6.75, 6.75, -10), new Point3D(6.75, 0, -10));
-		Triangle triangle3 = new Triangle(new Point3D(6.75, 0, -10), new Point3D(6.75, -6.75, -10), new Point3D(0, -6.75, -10));
-		Triangle triangle4 = new Triangle(new Point3D(0, -6.75, -10), new Point3D(-6.75, -6.75, -10), new Point3D(-6.75, 0, -10));
+		Material material = new Material();
+		Sphere sphere = new Sphere(3.0, new Point3D(0.0, 0.0, -10.0), material);
+		
+		Material material1 = new Material();
+		Material material2 = new Material();
+		Material material3 = new Material();		
+		Material material4 = new Material();
+		
+		Triangle triangle1 = new Triangle(new Point3D(-6.75, 6.75, -10), new Point3D(-6.75, 0, -10), new Point3D(0, 6.75, -10), material1);
+		Triangle triangle2 = new Triangle(new Point3D(0, 6.75, -10), new Point3D(6.75, 6.75, -10), new Point3D(6.75, 0, -10), material2);
+		Triangle triangle3 = new Triangle(new Point3D(6.75, 0, -10), new Point3D(6.75, -6.75, -10), new Point3D(0, -6.75, -10), material3);
+		Triangle triangle4 = new Triangle(new Point3D(0, -6.75, -10), new Point3D(-6.75, -6.75, -10), new Point3D(-6.75, 0, -10), material4);
 		//Creates a list of geometries to feed into our Scene instance
 		List<Geometry> list = new ArrayList<Geometry>();
 		//Adds the sphere and triangles to the list
