@@ -3,12 +3,7 @@ package elements;
 import java.awt.Color;
 
 //A class representing a light that ambiently lights a scene, like a light bulb or the sun would
-public class AmbientLight {
-	//The color of the ambient light
-	Color _color;
-	//The intensity of the ambient light, ranging from 0.0 to 1.0
-	double _kA;
-
+public class AmbientLight extends Light{
 	
 	//Empty constructor
 	public AmbientLight() {
