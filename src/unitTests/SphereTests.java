@@ -9,6 +9,7 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.awt.*;
 
 public class SphereTests {
 
@@ -17,7 +18,8 @@ public class SphereTests {
 		Point3D center = new Point3D(0.0, 0.0, -2.0);
 		double radius = 1.0;
 		Material material = new Material();
-		Sphere s = new Sphere(radius, center, material);
+		Color emission = new Color(0,0,0);
+		Sphere s = new Sphere(radius, center, material, emission);
 		
 		Ray r = new Ray(new Point3D(0.0, 0.0, 0.0), new Vector(0.0, 0.0, -1.0));
 		
@@ -38,7 +40,8 @@ public class SphereTests {
 		Point3D center = new Point3D(0.0, 0.0, -2.0);
 		double radius = 1.0;
 		Material material = new Material();
-		Sphere s = new Sphere(radius, center, material);
+		Color emission = new Color(0,0,0);
+		Sphere s = new Sphere(radius, center, material, emission);
 		
 		//Expected result is a vector pointing from the sphere straight back in the direction of the camera
 		Vector expectedResult = new Vector(0, 0, 1);

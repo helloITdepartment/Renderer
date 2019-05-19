@@ -26,17 +26,22 @@ public class RenderTests {
 		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
 		//Creates a sphere and some triangles around it 
 		Material material = new Material();
-		Sphere sphere = new Sphere(3.0, new Point3D(0.0, 0.0, -10.0), material);
+		Color emission = new Color(0,0,0);
+		Sphere sphere = new Sphere(3.0, new Point3D(0.0, 0.0, -10.0), material, emission);
 		
 		Material material1 = new Material();
+		Color emission1 = new Color(0, 255, 0);
 		Material material2 = new Material();
-		Material material3 = new Material();		
+		Color emission2 = new Color(0,0 ,0);
+		Material material3 = new Material();
+		Color emission3 = new Color(0,0,255);
 		Material material4 = new Material();
+		Color emission4 = new Color(255,0,0);
 		
-		Triangle triangle1 = new Triangle(new Point3D(-6.75, 6.75, -10), new Point3D(-6.75, 0, -10), new Point3D(0, 6.75, -10), material1);
-		Triangle triangle2 = new Triangle(new Point3D(0, 6.75, -10), new Point3D(6.75, 6.75, -10), new Point3D(6.75, 0, -10), material2);
-		Triangle triangle3 = new Triangle(new Point3D(6.75, 0, -10), new Point3D(6.75, -6.75, -10), new Point3D(0, -6.75, -10), material3);
-		Triangle triangle4 = new Triangle(new Point3D(0, -6.75, -10), new Point3D(-6.75, -6.75, -10), new Point3D(-6.75, 0, -10), material4);
+		Triangle triangle1 = new Triangle(new Point3D(-6.75, 6.75, -10), new Point3D(-6.75, 0, -10), new Point3D(0, 6.75, -10), material1, emission1);
+		Triangle triangle2 = new Triangle(new Point3D(0, 6.75, -10), new Point3D(6.75, 6.75, -10), new Point3D(6.75, 0, -10), material2, emission2);
+		Triangle triangle3 = new Triangle(new Point3D(6.75, 0, -10), new Point3D(6.75, -6.75, -10), new Point3D(0, -6.75, -10), material3, emission3);
+		Triangle triangle4 = new Triangle(new Point3D(0, -6.75, -10), new Point3D(-6.75, -6.75, -10), new Point3D(-6.75, 0, -10), material4, emission4);
 		//Creates a list of geometries to feed into our Scene instance
 		List<Geometry> list = new ArrayList<Geometry>();
 		//Adds the sphere and triangles to the list
@@ -50,7 +55,7 @@ public class RenderTests {
 		//Creates a scene to hold our universe
 		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, list, camera, 30.0);
 		//Creates an ImageWriter instance to help write down what our camera sees
-		ImageWriter imageWriter = new ImageWriter("RenderTest", 500, 500, 100, 100);
+		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmission", 500, 500, 100, 100);
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 		

@@ -1,6 +1,7 @@
 package geometries;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.*;
 
 import primitives.*;
 
@@ -22,10 +23,12 @@ public class Plane extends Geometry{
 		_normal = new Vector();
 		
 		_material = new Material();
+		
+		_emission = new Color(0,0,0);
 	}
 
 	//Parameterized constructor
-	public Plane(Point3D p1, Point3D p2, Point3D p3, Material material){
+	public Plane(Point3D p1, Point3D p2, Point3D p3, Material material, Color emission){
 		//creates a plane with three points passed in as parameters and calculates the normal vector, and sets the material to the one passed in
 		_p1 = p1;
 		_p2 = p2;
@@ -33,6 +36,8 @@ public class Plane extends Geometry{
 		_normal = getNormal(p1);
 		
 		_material = material;
+		
+		_emission = emission;
 	}
 
 	//Copy constructor
@@ -44,6 +49,8 @@ public class Plane extends Geometry{
 		_normal = getNormal(_p1);
 		
 		_material = other.getMaterial();
+		
+		_emission = other.getEmission();
 	}
 
 	//Getters
@@ -63,8 +70,13 @@ public class Plane extends Geometry{
 	}
 	
 	public Material getMaterial(){
-		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+		//Returns new Material with the same value as our _material, so that changes made at the callsite wont affect our variables
 		return new Material(_material);
+	}
+	
+	public Color getEmission(){
+		//Returns new Color with the same RGB values as our _emission, so that changes made at the callsite wont affect our variables
+		return new Color(_emission.getRGB());
 	}
 
 	//Setters
@@ -86,6 +98,11 @@ public class Plane extends Geometry{
 	public void setMaterial(Material material){
 		//Allows for the setting of the material data member from the passed parameters
 		_material = material;
+	}
+	
+	public void setEmission(Color emission) {
+		//Allows for the setting of the emission data member from the passed parameter
+		_emission = emission;
 	}
 
 	public List<Point3D> findIntersection(Ray r) {

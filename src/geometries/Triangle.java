@@ -1,4 +1,5 @@
 package geometries;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,19 @@ public class Triangle extends Geometry{
 		_p2 = new Point3D();
 		_p3 = new Point3D();
 		_material = new Material();
+		_emission = new Color(0,0,0);
 	}
 
 	//Parameterized constructor
-	public Triangle(Point3D p1, Point3D p2, Point3D p3, Material material){
+	public Triangle(Point3D p1, Point3D p2, Point3D p3, Material material, Color emission){
 		//sets the three vertices to the three parameters passed
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
 		
 		_material = material;
+		
+		_emission = emission;
 	}
 
 	//Copy constructor
@@ -37,6 +41,7 @@ public class Triangle extends Geometry{
 		_p2 = other._p2;
 		_p3 = other._p3;
 		_material = other.getMaterial();
+		_emission = other.getEmission();
 	}
 
 	//Getters
@@ -59,6 +64,11 @@ public class Triangle extends Geometry{
 		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
 		return new Material(_material);
 	}
+	
+	public Color getEmission(){
+		//Returns new Color with the same RGB values as our _emission, so that changes made at the callsite wont affect our variables
+		return new Color(_emission.getRGB());
+	}
 
 	//Setters
 	public void setP1(Point3D p1){
@@ -77,8 +87,13 @@ public class Triangle extends Geometry{
 	}
 	
 	public void setMaterial(Material material){
-		//Allows for the setting of the material data member from the passed parameters
+		//Allows for the setting of the material data member from the passed parameter
 		_material = material;
+	}
+	
+	public void setEmission(Color emission) {
+		//Allows for the setting of the emission data member from the passed parameter
+		_emission = emission;
 	}
 
 	@Override
@@ -87,7 +102,7 @@ public class Triangle extends Geometry{
 		List<Point3D> listToReturn = new ArrayList<>();
 
 		//Creates a plane representing the plane that the triangle lives in
-		Plane planeEncompassingTriangle = new Plane(_p1, _p2, _p3, _material);
+		Plane planeEncompassingTriangle = new Plane(_p1, _p2, _p3, _material, _emission);
 		//Finds the point that the ray would intersect into that plane at
 		List<Point3D> listOfPotentialPoints = planeEncompassingTriangle.findIntersection(r);
 		//if it missed the plane entirely, it has no chance of hitting the triangle and we return an empty list
@@ -131,7 +146,7 @@ public class Triangle extends Geometry{
 	}
 	
 	public Vector getNormal(Point3D p) {
-		return new Plane(_p1, _p2, _p3, _material).getNormal(p);
+		return new Plane(_p1, _p2, _p3, _material, _emission).getNormal(p);
 	}
 
 }
