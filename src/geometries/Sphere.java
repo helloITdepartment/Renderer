@@ -1,4 +1,5 @@
 package geometries;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class Sphere extends RadialGeometry{
 		super();
 		_center = new Point3D();
 		_material = new Material();
+		_emission = new Color(0,0,0);
 	}
 	
 	//Parameterized constructors
@@ -23,10 +25,11 @@ public class Sphere extends RadialGeometry{
 		_material = material;
 	}
 	
-	public Sphere(double radius, Point3D center, Material material){
+	public Sphere(double radius, Point3D center, Material material, Color emission){
 		_radius = radius;
 		_center = center;
 		_material = material;
+		_emission = emission;
 	}
 	
 	//Copy constructor
@@ -34,6 +37,7 @@ public class Sphere extends RadialGeometry{
 		_radius = other._radius;
 		_center = other._center;
 		_material = other.getMaterial();
+		_emission = other.getEmission();
 	}
 		
 	//Getters
@@ -45,6 +49,11 @@ public class Sphere extends RadialGeometry{
 	public Material getMaterial() {
 		return new Material(_material);
 	}
+	
+	public Color getEmission(){
+		//Returns new Color with the same RGB values as our _emission, so that changes made at the callsite wont affect our variables
+		return new Color(_emission.getRGB());
+	}
 		
 	//Setters
 	//radius setter is unnecessary as it's inherited from RadialGeometry
@@ -54,6 +63,11 @@ public class Sphere extends RadialGeometry{
 	
 	public void setMaterial(Material material) {
 		_material = material;
+	}
+	
+	public void setEmission(Color emission) {
+		//Allows for the setting of the emission data member from the passed parameter
+		_emission = emission;
 	}
 
 	public List<Point3D> findIntersection(Ray r) {

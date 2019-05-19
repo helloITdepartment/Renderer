@@ -1,4 +1,5 @@
 package geometries;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,5 +61,9 @@ public class Cylinder extends RadialGeometry{
 	
 	public Vector getNormal(Point3D p) {
 		return new Vector();
+	}
+
+	public Color getEmission() {
+		return new Color(0,0,0);
 	}
 }

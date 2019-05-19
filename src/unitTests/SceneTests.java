@@ -19,7 +19,7 @@ public class SceneTests {
 		//Creates a default scene for testing
 		Scene scene = new Scene();
 		//Creating a simple object for testing
-		Sphere testSphere = new Sphere(2, new Point3D(0,0,0), new Material());
+		Sphere testSphere = new Sphere(2, new Point3D(0,0,0), new Material(), new Color(0,0,0));
 		//Adding it to our scene
 		scene.addGeometry(testSphere);
 		//The List we're expecting to get back if all goes correctly
