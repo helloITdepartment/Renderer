@@ -16,6 +16,8 @@ public class Scene {
 	Color _backgroundColor;
 	//The ambient light in the universe, for example a sun
 	AmbientLight _ambientLight;
+	//List of all the light sources in this universe
+	List<LightSource> _lights;
 	//The list of all the objects in this universe
 	List<Geometry> _geometryList;
 	//The camera through which to see it all
@@ -142,5 +144,15 @@ public class Scene {
 	//Leverages List's built in iterator method
 	public Iterator<Geometry> getGeometriesIterator(){
 		return _geometryList.iterator();
+	}
+
+	//Method returning an iterator so we can loop through all the Light Sources in the scene,
+	//Leverages List's built in iterator method
+	public Iterator<LightSource> getLightsIterator(){
+		return _lights.iterator();
+	}
+	
+	public int numberOfLights(){
+		return _lights.size();
 	}
 }
