@@ -51,6 +51,7 @@ public class PlaneTests {
 		p2 = new Point3D(-2, 2, 5);
 		p3 = new Point3D(-3, -3, 5);
 		assertTrue("Failed where ray misses the plane (plane is behind ray)", testPlane.findIntersection(testRay).isEmpty());
+		
 	}
 	
 	@Test
