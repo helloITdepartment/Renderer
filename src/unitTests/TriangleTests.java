@@ -24,8 +24,8 @@ public class TriangleTests {
 		Point3D source = new Point3D();
 		Vector direction = new Vector(0,0,-1);
 		Ray testRay = new Ray(source, direction);
-		Point3D intersection = testTriangle.findIntersection(testRay).get(0);
-		System.out.println(intersection);
+		Point3D expectedValue = new Point3D(0,0,-5);
+		assertTrue("failed when triangle was sitting directly in front of camera", (testTriangle.findIntersection(testRay).get(0).compareTo(expectedValue) == 1));
 
 		//Testing the ray missing Triangle entirely (Triangle is off to the side, but plane is in front)
 
@@ -45,6 +45,7 @@ public class TriangleTests {
 		p2 = new Point3D(-2, 2, 5);
 		p3 = new Point3D(-3, -3, 5);
 		assertTrue("Failed under ray missing Triangle entirely (Triangle is behind ray)",testTriangle.findIntersection(testRay).isEmpty());
+		
 	}
 	
 	@Test

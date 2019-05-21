@@ -128,5 +128,6 @@ public class VectorTests {
 		 assertEquals("X coordinate failed under cross product with random vector", -0.1792, v.crossProduct(newV).getHead().getX().getCoordinate(), 1e-10);
 		 assertEquals("Y coordinate failed under cross product with random vector", -50.9608, v.crossProduct(newV).getHead().getY().getCoordinate(), 1e-10);
 		 assertEquals("Z coordinate failed under cross product with random vector", 43.12, v.crossProduct(newV).getHead().getZ().getCoordinate(), 1e-10);
+		 
 	}
 }

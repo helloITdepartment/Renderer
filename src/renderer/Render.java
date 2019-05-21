@@ -141,10 +141,10 @@ public class Render {
 		//Grabs the light coming out of the geometry itself
 		Color emissionLight = geometry.getEmission();
 		//Combines them into a new color
-		Color color = new Color((ambientLight.getRed() + emissionLight.getRed())/2,
+		Color combinedColor = new Color((ambientLight.getRed() + emissionLight.getRed())/2,
 								(ambientLight.getGreen() + emissionLight.getGreen())/2,
 								(ambientLight.getBlue() + emissionLight.getBlue())/2);
 		
-		return color;
+		return combinedColor;
 	}
 }
