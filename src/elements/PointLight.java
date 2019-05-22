@@ -1,15 +1,21 @@
 package elements;
 
-import primitives.Point3D;
+import java.awt.Color;
 
-public class PointLight extends Light{
+import primitives.Point3D;
+import primitives.Vector;
+
+public class PointLight extends Light implements LightSource{
 
     //point in three dimensional space representing the position of the light
     Point3D _position;
     //What dis? plz to explain
     //the three factors for attenuation with a distance
+    //Attenuates constantly
     double _Kc;
+    //Attenuates linearly
     double _Kl;
+    //Attenuates quadratically
     double _Kq;
 
     //default constructor
@@ -30,6 +36,11 @@ public class PointLight extends Light{
         _Kq = Kq;
     }
 
+  //getter for the position of the point light
+    public Point3D getposition() {
+        return _position;
+    }
+    
     //getters for the three measurements of attenuation Kc, Kl, Kq
     public double getKc()
     {
@@ -43,25 +54,34 @@ public class PointLight extends Light{
     {
         return new Double(_Kq);
     }
-    //getter for the position of the point light
-    public Point3D getposition() {
-        return _position;
-    }
 
     //allows for the setting of the factors of attenuation
-    public void set_Kc(double _Kc) {
-        this._Kc = _Kc;
+    public void set_Kc(double Kc) {
+        _Kc = Kc;
     }
 
-    public void set_Kl(double _Kl) {
-        this._Kl = _Kl;
+    public void set_Kl(double Kl) {
+        _Kl = Kl;
     }
 
-    public void set_Kq(double _Kq) {
-        this._Kq = _Kq;
+    public void set_Kq(double Kq) {
+        _Kq = Kq;
     }
     //allows for the setting of the position of the light
-    public void set_position(Point3D _position) {
-        this._position = _position;
+    public void set_position(Point3D position) {
+        _position = position;
     }
+    
+	public Color getIntensity(Point3D point) {
+		double distance = _position.distanceTo(point);
+		int newRed = _color.getRed()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
+		int newGreen = _color.getGreen()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
+		int newBlue = _color.getBlue()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
+		
+		return new Color(newRed, newGreen, newBlue);
+	}
+
+	public Vector getL(Point3D point) {
+		return new Vector(point.subtract(_position)).normalize();
+	}
 }

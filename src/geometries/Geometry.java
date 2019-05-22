@@ -16,4 +16,6 @@ public abstract class Geometry {
 	
 	public abstract Color getEmission();
 	
+	public abstract Material getMaterial();
+	
 }
