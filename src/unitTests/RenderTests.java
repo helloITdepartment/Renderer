@@ -24,6 +24,8 @@ public class RenderTests {
 	public void renderTest() {
 		//Sets up a "sun" with white light
 		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		//Sets up an empty list of lights
+		List<LightSource> lights = new ArrayList<LightSource>();
 		//Creates a sphere and some triangles around it 
 		Material material = new Material();
 		Color emission = new Color(0,0,0);
@@ -53,7 +55,7 @@ public class RenderTests {
 		//Instantiates a new Camera with default values (point at the origin, facing down the negative z axis)
 		Camera camera = new Camera();
 		//Creates a scene to hold our universe
-		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, list, camera, 30.0);
+		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, lights, list, camera, 30.0);
 		//Creates an ImageWriter instance to help write down what our camera sees
 		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmission", 500, 500, 100, 100);
 		//Creates a Render instance to pull it all together

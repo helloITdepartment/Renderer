@@ -45,6 +45,10 @@ public class Cylinder extends RadialGeometry{
 		//Returns new Ray with the same value as our _axisRay, so that changes made at the callsite wont affect our variables
 		return new Ray(_axisRay);
 	}
+	
+	public Material getMaterial() {
+		return new Material(_material);
+	}
 
 	//Setters
 	//radius setter is unnecessary as it's inherited from RadialGeometry

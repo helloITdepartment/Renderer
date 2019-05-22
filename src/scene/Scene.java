@@ -37,6 +37,8 @@ public class Scene {
 		//Sets the ambient light to a default AmbientLight (black color, intensity of 0)
 		_ambientLight = new AmbientLight();
 		//Initializes an empty list
+		_lights = new ArrayList<LightSource>();
+		//Initializes an empty list
 		_geometryList = new ArrayList<Geometry>();
 		//A default camera
 		_camera = new Camera();
@@ -45,10 +47,11 @@ public class Scene {
 	}
 
 	//Parameterized constructors
-	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, List<Geometry> geometryList, Camera camera, double screenDistance) {
+	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, List<LightSource> lights, List<Geometry> geometryList, Camera camera, double screenDistance) {
 		_sceneName = sceneName;
 		_backgroundColor = backgroundColor;
 		_ambientLight = ambientLight;
+		_lights = lights;
 		_geometryList = geometryList;
 		_camera = camera;
 		_screenDistance = screenDistance;
@@ -56,7 +59,7 @@ public class Scene {
 
 	//Since Java doesn't really do default parameters, this is how we can use a constructor without all the variables
 	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, Camera camera, double screenDistance) {
-		this(sceneName, backgroundColor, ambientLight, new ArrayList<Geometry>(), camera, screenDistance);
+		this(sceneName, backgroundColor, ambientLight, new ArrayList<LightSource>(), new ArrayList<Geometry>(), camera, screenDistance);
 	}
 
 	//Copy constructor
@@ -64,6 +67,7 @@ public class Scene {
 		_sceneName = other._sceneName;
 		_backgroundColor = other._backgroundColor;
 		_ambientLight = other._ambientLight;
+		_lights = other._lights;
 		_geometryList = other._geometryList;
 		_camera = other._camera;
 		_screenDistance = other._screenDistance;
@@ -89,14 +93,19 @@ public class Scene {
 
 		return new AmbientLight(color, intensity);
 	}
+	
+	public List<LightSource> getLightsList(){
+		//Returns new List with the same values as our _lights, so that changes made at the callsite wont affect our variables
+		return new ArrayList<LightSource>(_lights);
+	}
 
 	public List<Geometry> getGeometryList() {
-		//Returns new List with the same value as our _geometryList, so that changes made at the callsite wont affect our variables
-		return new ArrayList(_geometryList);
+		//Returns new List with the same values as our _geometryList, so that changes made at the callsite wont affect our variables
+		return new ArrayList<Geometry>(_geometryList);
 	}
 
 	public Camera getCamera() {
-		//Returns new _screenDistance with the same value as our _camera, so that changes made at the callsite wont affect our variables
+		//Returns new _camera with the same value as our _camera, so that changes made at the callsite wont affect our variables
 		return new Camera(_camera);
 	}
 
@@ -152,7 +161,4 @@ public class Scene {
 		return _lights.iterator();
 	}
 	
-	public int numberOfLights(){
-		return _lights.size();
-	}
 }
