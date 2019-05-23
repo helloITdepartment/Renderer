@@ -27,7 +27,7 @@ public class RenderTests {
 		//Sets up an empty list of lights
 		List<LightSource> lights = new ArrayList<LightSource>();
 		//Creates a spotlight to ass to our scene
-		SpotLight spotLight = new SpotLight(new Point3D(-10, 0, -5), new Vector(1, 0, -1), new Color(255, 0, 0));
+		SpotLight spotLight = new SpotLight(new Point3D(10, 0, -5), new Vector(-1, 0, -1), new Color(255, 0, 0));
 		lights.add(spotLight);
 		//Creates a sphere and some triangles around it 
 		Material material = new Material();
