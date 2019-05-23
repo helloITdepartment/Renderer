@@ -24,7 +24,7 @@ public class Triangle extends Geometry{
 
 	//Parameterized constructor
 	public Triangle(Point3D p1, Point3D p2, Point3D p3, Material material, Color emission){
-		//sets the three vertices to the three parameters passed
+		//sets the three vertices, material, and emission color to the three parameters passed
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
@@ -36,7 +36,7 @@ public class Triangle extends Geometry{
 
 	//Copy constructor
 	public Triangle(Triangle other){
-		//copies the vertices of the passed triangle onto the object it is called on
+		//copies the vertices of the passed triangle, its material, and its emission color onto the object it is called on
 		_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
@@ -61,7 +61,7 @@ public class Triangle extends Geometry{
 	}
 	
 	public Material getMaterial(){
-		//Returns new Point3D with the same value as our _p1, so that changes made at the callsite wont affect our variables
+		//Returns new Material with the same value as our _material, so that changes made at the callsite wont affect our variables
 		return new Material(_material);
 	}
 	
@@ -96,7 +96,7 @@ public class Triangle extends Geometry{
 		_emission = emission;
 	}
 
-	@Override
+	//Returns a List of points that a given ray would intersect with on this Triangle
 	public List<Point3D> findIntersection(Ray r) {
 		//Initializes an empty list that will contain the point(s) of intersection, if any
 		List<Point3D> listToReturn = new ArrayList<>();
@@ -115,27 +115,24 @@ public class Triangle extends Geometry{
 			Vector v11 = new Vector(_p1);
 			Vector v12 = new Vector(_p2);
 			Vector n1 = v11.crossProduct(v12).scale(1/(v11.crossProduct(v12).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
-			//depending if it was positive or negative to begin with, respectively
-			double sign1 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n1))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n1)));
+			
+			double sign1 = Math.signum(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n1)));
 
 			//Side 2
 			Vector v21 = new Vector(_p2);
 			Vector v22 = new Vector(_p3);
 			Vector n2 = v21.crossProduct(v22).scale(1/(v21.crossProduct(v22).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
-			//depending if it was positive or negative to begin with, respectively
-			double sign2 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n2))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n2)));
-
+			
+			double sign2 = Math.signum(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n2)));
+			
 			//Side 3
 			Vector v31 = new Vector(_p3);
 			Vector v32 = new Vector(_p1);
 			Vector n3 = v31.crossProduct(v32).scale(1/(v31.crossProduct(v32).length()));
-			//Since there's no easy way to pull the sign, we divide the dot product by its absolute value, yielding us either 1 or -1, 
-			//depending if it was positive or negative to begin with, respectively
-			double sign3 = ((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n3))/Math.abs(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n3)));
-
-			//if it is, add it to the list
+			
+			double sign3 = Math.signum(((new Vector(potentialPoint)).subtract(new Vector()).dotProduct(n3)));
+			
+			//if all the signs are equal, the point is in the triangle, add it to the list
 			if(sign1 == sign2 && sign2 == sign3) {
 				listToReturn.add(potentialPoint);
 			}
@@ -145,7 +142,9 @@ public class Triangle extends Geometry{
 		}
 	}
 	
+	//Returns the Vector normal to the triangle at the given point
 	public Vector getNormal(Point3D p) {
+		//Again by embedding the triangle in a plane and using Plane's getNormal function
 		return new Plane(_p1, _p2, _p3, _material, _emission).getNormal(p);
 	}
 

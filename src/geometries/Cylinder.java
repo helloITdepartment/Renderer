@@ -47,6 +47,7 @@ public class Cylinder extends RadialGeometry{
 	}
 	
 	public Material getMaterial() {
+		//Returns new Material with the same value as our _material, so that changes made at the callsite wont affect our variables
 		return new Material(_material);
 	}
 
@@ -57,17 +58,21 @@ public class Cylinder extends RadialGeometry{
 		_axisRay = axisRay;
 	}
 
+	//Returns a (possibly empty) list of points where a given Ray r would intersect our Cylinder
 	public List<Point3D> findIntersection(Ray r) {
-		//Returns a (possibly empty) list of points where a given Ray r would intersect our Cylinder
+		//Unimplemented for now as Cylinder is an extra project
 		List<Point3D> listToReturn = new ArrayList<>();
 		return listToReturn;
 	}
 	
+	//Returns a vector normal to the cylinder at a given point
 	public Vector getNormal(Point3D p) {
+		//Unimplemented for now as Cylinder is an extra project
 		return new Vector();
 	}
 
 	public Color getEmission() {
-		return new Color(0,0,0);
+		//Returns a new Color with the same RGB values as out _emission, so that changes made at the callsite wont affect our variables
+		return new Color(_emission.getRGB());
 	}
 }

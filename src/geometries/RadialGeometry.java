@@ -6,8 +6,9 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+//An abstract class representing Geometries that have some sort of radius
 public abstract class RadialGeometry extends Geometry{
-	//radius determines the radius of the shape for which the ray is going to shine through
+	//radius determines the radius of the shape
 	double _radius;
 
 	//Constructors
@@ -25,7 +26,7 @@ public abstract class RadialGeometry extends Geometry{
 
 	//Copy constructor
 	public RadialGeometry(RadialGeometry other){
-		//sets the radius of the called on object to the radius of the passed parameter
+		//sets the radius of the called-on object to the radius of the passed parameter
 		_radius = other._radius;
 	}
 
@@ -41,8 +42,11 @@ public abstract class RadialGeometry extends Geometry{
 		_radius = radius;
 	}
 	
+	//Each RadialGeometry must implement a method that:
+	//Returns a vector normal to the RadialGeometry at a given Point
 	public abstract Vector getNormal(Point3D p);
 
+	//Returns a list of points where a given Ray would intersect that RadialGeometry
 	public abstract List<Point3D> findIntersection(Ray r);
 
 }

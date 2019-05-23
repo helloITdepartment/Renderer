@@ -60,7 +60,7 @@ public class RenderTests {
 		//Creates a scene to hold our universe
 		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, lights, list, camera, 30.0);
 		//Creates an ImageWriter instance to help write down what our camera sees
-		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlightBugFix", 500, 500, 100, 100);
+		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlightBugFixTest", 500, 500, 100, 100);
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 		
