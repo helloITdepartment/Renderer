@@ -18,6 +18,8 @@ public class DirectionalLight extends Light implements LightSource {
 	//constructor which accepts a vector as a parameter and sets the direction of the DirectionalLight accordingly
 	public DirectionalLight(Vector direction){
 		_direction = direction;
+        _color = new Color(255, 255, 255);
+        _kA = 1.0;
 	}
 
 
