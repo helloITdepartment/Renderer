@@ -13,9 +13,9 @@ public class Material {
 	//Constructors
 	//Default constructor
 	public Material() {
-		_kD = 0.0;
-		_kS = 0.0;
-		_nShininess = 0;
+		_kD = 0.8;
+		_kS = 0.99;
+		_nShininess = 50;
 	}
 	
 	public Material(double kd, double ks, int shininess) {

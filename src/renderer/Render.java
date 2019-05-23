@@ -198,12 +198,23 @@ public class Render {
 	
 	private Color calcDiffuseComp(Double kd, Vector normal, Vector l, Color intensity) {
 		double factor = kd*(normal.dotProduct(l));
-		return new Color((int) (intensity.getRed()*factor), (int) (intensity.getGreen()*factor), (int) (intensity.getBlue()*factor));
+		return scaleColor(intensity, factor);
 	}
 	
 	private Color calcSpecularComp(Double ks, Vector v, Vector normal, Vector l, int shininess, Color intensity) {
 		Vector r = l.subtract(normal.scale(2*l.dotProduct(normal)));
 		double factor = ks*Math.pow(v.normalize().dotProduct(r.normalize()), shininess);
-		return new Color((int) (intensity.getRed()*factor), (int) (intensity.getGreen()*factor), (int) (intensity.getBlue()*factor));
+		return scaleColor(intensity, factor);
+	}
+	
+	public static Color scaleColor(Color color, double factor) {
+		int newRed = ((int)(color.getRed()*factor) <= 255 ? (int)(color.getRed()*factor) : 255);
+		newRed = (newRed >= 0 ? newRed : 0);
+		int newGreen = ((int)(color.getGreen()*factor) <= 255 ? (int)(color.getGreen()*factor) : 255);
+		newGreen = (newGreen >= 0 ? newGreen : 0);
+		int newBlue = ((int)(color.getBlue()*factor) <= 255 ? (int)(color.getBlue()*factor) : 255);
+		newBlue = (newBlue >= 0 ? newBlue : 0);
+		
+		return new Color(newRed, newGreen, newBlue);
 	}
 }
