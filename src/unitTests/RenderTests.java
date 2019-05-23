@@ -27,7 +27,7 @@ public class RenderTests {
 		//Sets up an empty list of lights
 		List<LightSource> lights = new ArrayList<LightSource>();
 		//Creates a spotlight to ass to our scene
-		SpotLight spotLight = new SpotLight(new Point3D(10, 0, -5), new Vector(-1, 0, -1), new Color(255, 0, 0));
+		SpotLight spotLight = new SpotLight(new Point3D(10, -3, -5), new Vector(-1, 0, -1), new Color(255, 0, 0));
 		lights.add(spotLight);
 		//Creates a sphere and some triangles around it 
 		Material material = new Material();
@@ -60,7 +60,7 @@ public class RenderTests {
 		//Creates a scene to hold our universe
 		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, lights, list, camera, 30.0);
 		//Creates an ImageWriter instance to help write down what our camera sees
-		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlight2", 500, 500, 100, 100);
+		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlightBugFix", 500, 500, 100, 100);
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 		
@@ -71,5 +71,6 @@ public class RenderTests {
 		render.printGrid(50);
 		//Prints it all to a file
 		imageWriter.writeToImage();
+		
 	}
 }
