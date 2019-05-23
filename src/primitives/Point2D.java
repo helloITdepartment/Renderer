@@ -8,20 +8,21 @@ public class Point2D{
 	//Constructors
 	//Empty constructor
 	public Point2D(){
-		//default constructor initializing x, y coordinates to origin
+		//default constructor initializing x, y coordinates to the origin
 		_x = new Coordinate();
 		_y = new Coordinate();
 	}
 		
 	//Parameterized constructor
 	public Point2D(Coordinate x, Coordinate y){
-		//set data members to variables passed
+		//set data members to parameters passed
 		_x = x;
 		_y = y;
 	}
 	
 	//Copy constructor
 	public Point2D(Point2D other){
+		//Takes in another Point2D and copies data members to its own
 		_x = other._x;
 		_y = other._y;
 	}

@@ -68,8 +68,9 @@ public class Point3D extends Point2D{
 		}
 	}
 
-	//Vector addition. Adds corresponding x, y, and z values and returns a new Point3D
+	//Vector addition. Returns the point that a vector would reach if started at this point
 	public Point3D add(Vector v){
+		//Adds corresponding x, y, and z values and returns a new Point3D
 		Coordinate newX = super.getX().add(v.getHead().getX());
 		Coordinate newY = super.getY().add(v.getHead().getY());
 		Coordinate newZ = _z.add(v.getHead().getZ());
@@ -86,8 +87,9 @@ public class Point3D extends Point2D{
 		return new Point3D(newX, newY, newZ);
 	}
 
-	//Vector subtraction. Subtracts corresponding x, y, and z values and returns a new Point3D	
+	//Vector subtraction. Returns the point that a vector would reach if flipped around and started at this point
 	public Point3D subtract(Vector v){
+		//Subtracts corresponding x, y, and z values and returns a new Point3D	
 		Coordinate newX = super.getX().subtract(v.getHead().getX());
 		Coordinate newY = super.getY().subtract(v.getHead().getY());
 		Coordinate newZ = _z.subtract(v.getHead().getZ());
