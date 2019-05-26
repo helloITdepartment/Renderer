@@ -21,6 +21,7 @@ public class CameraTest {
 		knownValue.setDirection(new Vector(0.0, 0.0, -1.0));
 		System.out.println(r.getDirection());
 		
+		//Checks to make sure the ray constructed is equal to the expected value
 		assertTrue("Failed under ray construction through center pixel", knownValue.compareTo(r) == 1);
 		
 		//Construct ray through corner pixel
@@ -29,6 +30,7 @@ public class CameraTest {
 		knownValue.setSource(zeroPoint);
 		knownValue.setDirection(new Vector(-36.0, 36.0, -1.0));
 		
+		//Checks to make sure the ray constructed is equal to the expected value
 		assertTrue("Failed under ray construction through corner pixel", knownValue.compareTo(r) == 1);
 		
 				
@@ -38,6 +40,7 @@ public class CameraTest {
 		knownValue.setSource(zeroPoint);
 		knownValue.setDirection(new Vector(681.5, -212.5, -215.0));
 		
+		//Checks to make sure the ray constructed is equal to the expected value
 		assertTrue("Failed under ray construction through arbitrary pixel", knownValue.compareTo(r) == 1);
 	}
 
