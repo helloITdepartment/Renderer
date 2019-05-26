@@ -110,6 +110,7 @@ public class Scene {
 	}
 
 	public double getScreenDistance() {
+		//Returns the distance from teh camera to the screen it's looking through
 		return _screenDistance;
 	}
 
