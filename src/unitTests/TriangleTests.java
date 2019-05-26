@@ -19,11 +19,14 @@ public class TriangleTests {
 		Point3D p3 = new Point3D(0, -4, -5);
 		Material material = new Material();
 		Color emission = new Color(0,0,0);
+		//set test triangle with these points, color, and material
 		Triangle testTriangle = new Triangle(p1, p2, p3, material, emission);
 
+		//now construct the ray and its direction which will be tested
 		Point3D source = new Point3D();
 		Vector direction = new Vector(0,0,-1);
 		Ray testRay = new Ray(source, direction);
+		//set expectedValue of the intersection point and compare, if the test fails throw the failure
 		Point3D expectedValue = new Point3D(0,0,-5);
 		assertTrue("failed when triangle was sitting directly in front of camera", (testTriangle.findIntersection(testRay).get(0).compareTo(expectedValue) == 1));
 
@@ -44,6 +47,7 @@ public class TriangleTests {
 		p1 = new Point3D(1, 1, 5);
 		p2 = new Point3D(-2, 2, 5);
 		p3 = new Point3D(-3, -3, 5);
+		testTriangle = new Triangle(p1, p2, p3, material, emission);
 		assertTrue("Failed under ray missing Triangle entirely (Triangle is behind ray)",testTriangle.findIntersection(testRay).isEmpty());
 		
 	}
@@ -57,11 +61,13 @@ public class TriangleTests {
 		Point3D p3 = new Point3D(-3, -3, -5);
 		Material material = new Material();
 		Color emission = new Color(0,0,0);
+		// create a new triangle with no color and with the points from above
 		Triangle triangle = new Triangle(p1, p2, p3, material, emission);
 		//Expected result is a vector pointing from the triangle straight back in the direction of the camera
 		Vector expectedResult = new Vector(0, 0, 1);
 		assertTrue("Failed where plane is perpendicular to camera (normal should be (0,0,1))", triangle.getNormal(p1).compareTo(expectedResult) == 1);		
 		
+		// try the test with a different set of points
 		p1 = new Point3D(-1, 1, -1);
 		p2 = new Point3D(1, 0, -2);
 		p3 = new Point3D(-1, -1, -3);

@@ -9,14 +9,18 @@ public class VectorTests {
 
 	@Test
 	public void testAdd() {
+		//Arbitrary Vector for testing
 		Vector v = new Vector(2.5, 3.6, 1.0);
 		
+		//Tests the general case of positive addition
 		Vector newV = v.add(new Vector(1.0, 1.0, 1.0));
 		assertEquals("Failed under positive addition", 1, newV.compareTo(new Vector(3.5, 4.6, 2.0)));
 
+		//Tests the general case of negative addition
 		newV = v.add(new Vector(-1.0, -1.0, -1.0));
 		assertEquals("Failed under negative addition", 1, newV.compareTo(new Vector(1.5, 2.6, 0.0)));
 
+		//Tests the edge case of addition of the zero vector
 		newV = v.add(new Vector(0.0, 0.0, 0.0));
 		assertEquals("Failed under zero addition", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
 
@@ -26,12 +30,15 @@ public class VectorTests {
 	public void testSubtract() {
 		Vector v = new Vector(2.5, 3.6, 1.0);
 		
+		//Tests the general case of positive subtraction
 		Vector newV = v.subtract(new Vector(1.0, 1.0, 1.0));
 		assertEquals("Failed under positive subtraction", 1, newV.compareTo(new Vector(1.5, 2.6, 0.0)));
 
+		//Tests the general case of negative subtraction
 		newV = v.subtract(new Vector(-1.0, -1.0, -1.0));
 		assertEquals("Failed under negative subtraction", 1, newV.compareTo(new Vector(3.5, 4.6, 2.0)));
 
+		//Tests the edge case of subtraction of the zero vector
 		newV = v.subtract(new Vector(0.0, 0.0, 0.0));
 		assertEquals("Failed under zero subtraction", 1, newV.compareTo(new Vector(2.5, 3.6, 1.0)));
 	}
@@ -40,15 +47,19 @@ public class VectorTests {
 	public void testScaling() {
 		Vector v = new Vector(7.7, 0.0, 0.032);
 		
+		//Tests the edge case of scaling to 0
 		Vector newV = v.scale(0.0);
 		assertEquals("Failed under scaling by zero", 0.0, newV.length(), 1e-10);
 
+		//Tests the general case of scaling by a negative number
 		newV = v.scale(-1.0);
 		assertEquals("Failed under vector reversal", 1, newV.compareTo(new Vector(-7.7, 0.0, -0.032)));
 
+		//Tests the general case of growing a vector
 		newV = v.scale(2.0);
 		assertEquals("Failed under stretching of vector", 1, newV.compareTo(new Vector(7.7 * 2.0, 0.0, 0.032 * 2.0)));
 
+		//Tests the general case of shrinking a vector
 		newV = v.scale(0.5);
 		assertEquals("Failed under shrinking of vector", 1, newV.compareTo(new Vector(7.7 / 2.0, 0.0, 0.032 / 2.0)));
 	}
@@ -57,32 +68,40 @@ public class VectorTests {
 	public void testDotProduct() {
 		Vector v = new Vector(3.4, 5.6, 7.8);
 		
+		//Tests general case of a straightforward dot product
 		Vector newV = new Vector(0.9, 4.3, 2.1);
 		assertEquals("Failed under normal dot product", 43.52, v.dotProduct(newV), 1e-10);
 
+		//Tests general case of dot product with a vector facing the other way
 		newV = new Vector(-0.9, -4.3, -2.1);
 		assertEquals("Failed under dot product with vector of opposing sign", -43.52, v.dotProduct(newV), 1e-10);
 
+		//Tests edge case of dot product with the zero vector
 		newV = new Vector(0.0, 0.0, 0.0);
 		assertEquals("Failed under dot product with zero vector", 0.0, v.dotProduct(newV), 1e-10);
 
+		//Tests edge case of dot product with another vector at a 90 degree angle
 		newV = new Vector(-11.9, 4.3, 2.1);
 		assertEquals("Failed under dot product with orthogonal vector", 0, v.dotProduct(newV), 1e-10);
 	}
 
 	@Test
 	public void testLength() {
+		//Tests edge case of length of the zero vector
 		Vector v = new Vector(0.0, 0.0, 0.0);
 		assertEquals("Zero vector length failed", 0.0, v.length(), 1e-10);
 
+		//checks to make sure it doesn't accidentally assign zero to a vector just because the sum of the components is 0
 		v = new Vector(1.0, 0.0, -1.0);
 		assertFalse("Assigned zero length to non-zero vector", v.length() == 0.0);
 
+		//Picks random values
 		Random r = new Random();
 		double randomX = (r.nextDouble() * 200) - 100;
 		double randomY = (r.nextDouble() * 200) - 100;
 		double randomZ = (r.nextDouble() * 200) - 100;
 
+		//Checks general case of length on an arbitrary vector
 		v = new Vector(randomX, randomY, randomZ);
 		assertEquals("Length function failed on random vector",
 				Math.sqrt(randomX * randomX + randomY * randomY + randomZ * randomZ), v.length(), 1e-10);
