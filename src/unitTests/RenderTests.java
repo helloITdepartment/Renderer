@@ -26,7 +26,7 @@ public class RenderTests {
 		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
 		//Sets up an empty list of lights
 		List<LightSource> lights = new ArrayList<LightSource>();
-		//Creates a spotlight to ass to our scene
+		//Creates a spotlight to add to our scene
 		SpotLight spotLight = new SpotLight(new Point3D(10, -3, -5), new Vector(-1, 0, -1), new Color(255, 0, 0));
 		lights.add(spotLight);
 		//Creates a sphere and some triangles around it 
@@ -60,7 +60,7 @@ public class RenderTests {
 		//Creates a scene to hold our universe
 		Scene scene = new Scene("TestScene", new Color(0, 0, 0), ambientLight, lights, list, camera, 30.0);
 		//Creates an ImageWriter instance to help write down what our camera sees
-		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlightBugFix", 500, 500, 100, 100);
+		ImageWriter imageWriter = new ImageWriter("RenderTestWithEmissionAndSpotlightBugFixTest", 500, 500, 100, 100);
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 		
@@ -72,5 +72,35 @@ public class RenderTests {
 		//Prints it all to a file
 		imageWriter.writeToImage();
 		
+	}
+
+	@Test
+	public void spotLightRenderTest() {
+		//Sets up a "sun" with white light
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		//Instantiates a new Camera with default values (point at the origin, facing down the negative z axis)
+		Camera camera = new Camera();
+		//Sets up the list of geometries in our scene
+		List<Geometry> geoList = new ArrayList<Geometry>();
+		//Sets up the sphere in our scene and adds it to the list
+		Sphere sphere = new Sphere(6.0, new Point3D(0.0, 0.0, -10.0), new Material(), new Color(148,0,211));
+		geoList.add(sphere);
+		//Sets up an empty list of lights
+		List<LightSource> lights = new ArrayList<LightSource>();
+		//Creates a spotlight to add to our scene
+		SpotLight spotLight = new SpotLight(new Point3D(25,25,-2), new Vector(-1,-1,-0.5), new Color(255,255,255));
+		lights.add(spotLight);
+		//Creates a scene to hold it all
+		Scene scene = new Scene("SpotLightTestScene", new Color(0,0,0), ambientLight, lights, geoList, camera, 30.0);
+		//Creates an ImageWriter instance to help write down what our camera sees
+		ImageWriter imageWriter = new ImageWriter("SpotLightTest25", 500, 500, 100, 100);
+		//Creates a Render instance to pull it all together
+		Render render = new Render(scene, imageWriter);
+
+
+		//Records what the camera sees
+		render.renderImage();
+		//Prints it all to a file
+		imageWriter.writeToImage();
 	}
 }

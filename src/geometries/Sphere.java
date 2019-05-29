@@ -12,7 +12,9 @@ public class Sphere extends RadialGeometry{
 	//Constructors
 	//Empty constructor
 	public Sphere(){
+		//Super calls the empty RadialGeometry constructor which sets the radius
 		super();
+		//Sets the other data members to default values
 		_center = new Point3D();
 		_material = new Material();
 		_emission = new Color(0,0,0);
@@ -20,12 +22,15 @@ public class Sphere extends RadialGeometry{
 	
 	//Parameterized constructors
 	public Sphere(Point3D center, Material material){
+		//Sets a default radius
 		super();
+		//Sets the other members to parameters passed
 		_center = center;
 		_material = material;
 	}
 	
 	public Sphere(double radius, Point3D center, Material material, Color emission){
+		//Sets all the variables to parameters passed
 		_radius = radius;
 		_center = center;
 		_material = material;
@@ -34,6 +39,7 @@ public class Sphere extends RadialGeometry{
 	
 	//Copy constructor
 	public Sphere(Sphere other){
+		//Sets all variables to copies of other's
 		_radius = other._radius;
 		_center = other._center;
 		_material = other.getMaterial();
@@ -43,10 +49,12 @@ public class Sphere extends RadialGeometry{
 	//Getters
 	//radius getter is unnecessary as it's inherited from RadialGeometry
 	public Point3D getCenter(){
+		//Returns new Point3D with the same value as our _center, so that changes made at the callsite wont affect our variables
 		return new Point3D(_center);
 	}
 	
 	public Material getMaterial() {
+		//Returns new Material with the same value as our _material, so that changes made at the callsite wont affect our variables
 		return new Material(_material);
 	}
 	
@@ -58,10 +66,12 @@ public class Sphere extends RadialGeometry{
 	//Setters
 	//radius setter is unnecessary as it's inherited from RadialGeometry
 	public void setCenter(Point3D center){
+		//Allows for setting of protected data member _center;
 		_center = center;
 	}
 	
 	public void setMaterial(Material material) {
+		//Allows for setting of protected data member _material;
 		_material = material;
 	}
 	
@@ -70,18 +80,27 @@ public class Sphere extends RadialGeometry{
 		_emission = emission;
 	}
 
+	//Returns a (possibly empty) list of points where a given Ray would intersect our Sphere
 	public List<Point3D> findIntersection(Ray r) {
-		// TODO Auto-generated method stub
+		//Initializes an empty List
 		List<Point3D> listToReturn = new ArrayList<>();
 		
+		//l is the vector from the center of the camera to the center of the sphere
 		Vector l = new Vector(_center.subtract(new Point3D(0,0,0)));
+		
+		//tM is the length of the base of a right triangle made by extending the Ray to the middle of the Sphere, where l is the hypotenuse
 		double tM = l.dotProduct(r.getDirection().normalize());
+		
+		//d is the height of the triangle, calculated by manipulating the Pythegorean formula
 		double d = Math.sqrt(l.length()*l.length() - tM*tM);
 		
+		//If d is bigger than the radius, the ray passes over the sphere and we return and empty list
 		if(d > _radius) {
 			return new ArrayList<>();
 		}
 		
+		
+		//Uses the formula given in class to calculate the point(s) of intersection
 		double tH = Math.sqrt(_radius*_radius - d*d);
 		double t1 = tM-tH;
 		double t2 = tM+tH;
