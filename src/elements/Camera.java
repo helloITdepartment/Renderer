@@ -79,4 +79,22 @@ public class Camera {
 		//Returns new Vector with the same value as our _vRight, so that changes made at the callsite wont affect our variables
 		return new Vector(_vRight);
 	}
+	
+	//Setters
+	public void setP0(Point3D p0) {
+		//Allows for setting of protected data member 
+		_p0 = p0;
+	}
+	public void setVup(Vector vUp) {
+		//Allows for setting of protected data member _vUp
+		_vUp = vUp;
+	}
+	public void setVto(Vector vTo) {
+		//Allows for setting of protected data member _vTo
+		_vTo = vTo;
+	}
+	public void setVright(Vector vRight) {
+		//Allows for setting of protected data member _vRight
+		_vRight = vRight;
+	}
 }

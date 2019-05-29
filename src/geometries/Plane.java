@@ -16,7 +16,7 @@ public class Plane extends Geometry{
 	//Constructors
 	//Empty constructor
 	public Plane(){
-		//Creates a plane with three default points and a default normal to the plane
+		//Creates a plane with three default points, a default normal to the plane, a default Material and default Color for the emission
 		_p1 = new Point3D();
 		_p2 = new Point3D();
 		_p3 = new Point3D();
@@ -29,7 +29,7 @@ public class Plane extends Geometry{
 
 	//Parameterized constructor
 	public Plane(Point3D p1, Point3D p2, Point3D p3, Material material, Color emission){
-		//creates a plane with three points passed in as parameters and calculates the normal vector, and sets the material to the one passed in
+		//creates a plane with three points passed in as parameters and calculates the normal vector, and sets the material and color to the ones passed in
 		_p1 = p1;
 		_p2 = p2;
 		_p3 = p3;
@@ -42,7 +42,7 @@ public class Plane extends Geometry{
 
 	//Copy constructor
 	public Plane(Plane other){
-		//copies the points from the passed plane to the plane it is called on
+		//copies the points, material, and emission from the passed plane to the plane it is called on, and calculates the normal
 		_p1 = other._p1;
 		_p2 = other._p2;
 		_p3 = other._p3;
@@ -105,6 +105,7 @@ public class Plane extends Geometry{
 		_emission = emission;
 	}
 
+	//Returns a (possible empty) list of points where a given Ray would intersect the Plane
 	public List<Point3D> findIntersection(Ray r) {
 		//Initializes an empty list that will contain the point(s) of intersection, if any
 		List<Point3D> listToReturn = new ArrayList<>();
@@ -112,7 +113,8 @@ public class Plane extends Geometry{
 		//denominator holds the result of the dot product between the ray and the plane
 		double denominator = _normal.dotProduct(r.getDirection());
 
-		//if the dot product returns zero it means the ray is perpendicular to the normal which is perpendicular to the plane and therefore runs parallel to the plane and does not intersect
+		//if the dot product returns zero it means the ray is perpendicular to the normal which is perpendicular to the plane 
+		//and therefore runs parallel to the plane and does not intersect
 		if(denominator == 0) {
 			//returns an empty list of intersection
 			return listToReturn;
@@ -131,7 +133,9 @@ public class Plane extends Geometry{
 		return listToReturn;
 	}
 	
+	//Returns a vector normal to the plane. Since a plane has the same normal at all points, it actually doesn't matter which point the method is calle don
 	public Vector getNormal(Point3D p) {
+		//Returns the cross product between two vectors in the plane (the one between p1-p2, and p1-p3) which, by definition, is the normal to the plane
 		return new Vector(_p2.subtract(_p1)).crossProduct(new Vector(_p3.subtract(_p1))).normalize();
 	}
 }

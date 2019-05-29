@@ -119,6 +119,7 @@ public class Render {
 	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> map) {
 		//initializes the smallest distance at infinity so that any point in the list will be closer
 		Double smallestDistance = Double.POSITIVE_INFINITY;
+		//Creates a map to hold the closest point
 		Map<Geometry, Point3D> closestPoint = new HashMap<Geometry, Point3D>();
 		
 		//Loops through all the geometries that the ray intersected
@@ -127,8 +128,11 @@ public class Render {
 			for(Point3D point : map.get(geo)) {
 				//Checks if given point is closest, as mentioned above
 				if(_scene.getCamera().getP0().distanceTo(point) < smallestDistance) {
+					//If so, updates the shortest distance
 					smallestDistance = _scene.getCamera().getP0().distanceTo(point);
+					//Clears the map so there isn't more than one point inside
 					closestPoint.clear();
+					//Updates the closest point
 					closestPoint.put(geo, new Point3D(point));
 				}
 			}
@@ -183,7 +187,7 @@ public class Render {
 				}
 
 			}
-
+			//Finds the color of the components of the light thats been diffused and bounces off specularly
 			Color diffusedLight = new Color(diffusedLightRed/numberOfLights, diffusedLightBlue/numberOfLights, diffusedLightGreen/numberOfLights);
 			Color specularLight = new Color(specularLightRed/numberOfLights, specularLightBlue/numberOfLights, specularLightGreen/numberOfLights);
 
@@ -194,23 +198,27 @@ public class Render {
 
 			return combinedColor;
 		}else {
+			//Otherwise divide them by 2 (one for emission and one for ambient) to avoid a divide by 0
 			return new Color((ambientLight.getRed() + emissionLight.getRed())/2,
 					(ambientLight.getGreen() + emissionLight.getGreen())/2,
 					(ambientLight.getBlue() + emissionLight.getBlue())/2);
 		}
 	}
 	
+	// private method to calculate the diffuse light (according to the formula from slides)
 	private Color calcDiffuseComp(Double kd, Vector normal, Vector l, Color intensity) {
 		double factor = kd*(normal.dotProduct(l));
 		return scaleColor(intensity, factor);
 	}
 	
+	// private method to calculate the specular light (according to the formula from slides)
 	private Color calcSpecularComp(Double ks, Vector v, Vector normal, Vector l, int shininess, Color intensity) {
 		Vector r = l.subtract(normal.scale(2*l.dotProduct(normal)));
 		double factor = ks*Math.pow(v.normalize().dotProduct(r.normalize()), shininess);
 		return scaleColor(intensity, factor);
 	}
 	
+	//Helper method to scale colors properly without going out of range
 	public static Color scaleColor(Color color, double factor) {
 		int newRed = ((int)(color.getRed()*factor) <= 255 ? (int)(color.getRed()*factor) : 255);
 		newRed = (newRed >= 0 ? newRed : 0);

@@ -9,6 +9,7 @@ public abstract class Light {
 	//The intensity of the light, ranging from 0.0 to 1.0
 	double _kA;
 
+	//Default implementation of getIntensity Lights
     //Returns a version of _color, where each component is scaled by _kA, representing the color
     public Color getIntensity() {
         int red = (int)(_color.getRed()*_kA);
