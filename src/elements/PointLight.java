@@ -31,6 +31,20 @@ public class PointLight extends Light implements LightSource{
     	//Sets _kA to a default 1.0
     	_kA = 1.0;
     }
+    
+    public PointLight(Point3D position)
+    {
+    	//Sets the position to the origin
+    	_position = position;
+    	//Sets _kc, _kl, _kq to default values that work nicely
+    	_Kc = 0.00000000001;
+    	_Kl = 0.00000000001;
+    	_Kq = 0.00000000001;
+    	//Sets color to a default white
+    	_color = new Color(255, 255, 255);
+    	//Sets _kA to a default 1.0
+    	_kA = 1.0;
+    }
 
     //constructor which receives the position of the vector and the factors of attenuation
     public PointLight(Point3D pos, double Kc, double Kl, double Kq)
@@ -151,15 +165,33 @@ public class PointLight extends Light implements LightSource{
 	//Returns a version of _color, where each component is scaled by _kA, representing the color
 	public Color getIntensity(Point3D point) {
 		double distance = _position.distanceTo(point);
-		int newRed = _color.getRed()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
-		int newGreen = _color.getGreen()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
-		int newBlue = _color.getBlue()/((int) (_Kc + _Kl*distance + _Kq*distance*distance));
+		double factor = (_Kc + _Kl*distance + _Kq*distance*distance);
 		
-		return new Color(newRed, newGreen, newBlue);
+		return scaleColor(getColor(), factor);
 	}
 
 	//Return the vector that a photon coming from this PointLight would travel along to intersect the given Point
 	public Vector getL(Point3D point) {
 		return new Vector(point.subtract(_position)).normalize();
+	}
+
+	//A method to scale colors which makes sure values never go over 255 or below 0
+	public Color scaleColor(Color color, double factor) {
+		//Scales the red component. It it's above 255, just caps it at 255
+		int newRed = ((int)(color.getRed()*factor) <= 255 ? (int)(color.getRed()*factor) : 255);
+		//if it's below 0, brings it back up to 0
+		newRed = (newRed >= 0 ? newRed : 0);
+
+		//Scales the blue component. It it's above 255, just caps it at 255
+		int newGreen = ((int)(color.getGreen()*factor) <= 255 ? (int)(color.getGreen()*factor) : 255);
+		//if it's below 0, brings it back up to 0
+		newGreen = (newGreen >= 0 ? newGreen : 0);
+
+		//Scales the green component. It it's above 255, just caps it at 255
+		int newBlue = ((int)(color.getBlue()*factor) <= 255 ? (int)(color.getBlue()*factor) : 255);
+		//if it's below 0, brings it back up to 0
+		newBlue = (newBlue >= 0 ? newBlue : 0);
+
+		return new Color(newRed, newGreen, newBlue);
 	}
 }
