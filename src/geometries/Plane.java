@@ -2,10 +2,12 @@ package geometries;
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
-
+import java.util.Map;
+import java.util.HashMap;
+import elements.LightSource;
 import primitives.*;
 
-public class Plane extends Geometry{
+public class Plane extends Geometry implements FlatGeometry{
 	//Any plane can be uniquely represented by 3 points
 	Point3D _p1;
 	Point3D _p2;
@@ -138,4 +140,7 @@ public class Plane extends Geometry{
 		//Returns the cross product between two vectors in the plane (the one between p1-p2, and p1-p3) which, by definition, is the normal to the plane
 		return new Vector(_p2.subtract(_p1)).crossProduct(new Vector(_p3.subtract(_p1))).normalize();
 	}
+
+
+
 }

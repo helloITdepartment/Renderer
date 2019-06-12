@@ -5,7 +5,7 @@ import java.util.List;
 
 import primitives.*;
 
-public class Triangle extends Geometry{
+public class Triangle extends Geometry implements FlatGeometry{
 	//three points representing the three vertices of the triangle
 	Point3D _p1;
 	Point3D _p2;
