@@ -59,14 +59,16 @@ public class Render {
 	
 	public void renderImage() {
 		for(int i = 0; i < _imageWriter.getWidth(); i++) {
+			
 			for(int j = 0; j < _imageWriter.getHeight(); j++) {
-				
+								
 				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
 				
 				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
 				if (pointsIntersected.isEmpty()) {
 					_imageWriter.writePixel(i, j, _scene.getBackgroundColor());
 				} else {
+
 					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected);
 					Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
 					Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
@@ -192,8 +194,8 @@ public class Render {
 
 			}
 			//Finds the color of the components of the light thats been diffused and bounces off specularly
-			Color diffusedLight = new Color(diffusedLightRed/numberOfLights, diffusedLightBlue/numberOfLights, diffusedLightGreen/numberOfLights);
-			Color specularLight = new Color(specularLightRed/numberOfLights, specularLightBlue/numberOfLights, specularLightGreen/numberOfLights);
+//			Color diffusedLight = new Color(diffusedLightRed/numberOfLights, diffusedLightBlue/numberOfLights, diffusedLightGreen/numberOfLights);
+//			Color specularLight = new Color(specularLightRed/numberOfLights, specularLightBlue/numberOfLights, specularLightGreen/numberOfLights);
 
 			//Combines them into a new color
 			Color combinedColor = new Color((totalRed/(numberOfLights+2)), (totalGreen/(numberOfLights+2)), (totalBlue/(numberOfLights+2)));

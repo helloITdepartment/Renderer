@@ -13,7 +13,11 @@ public class Coordinate {
 	//Parameterized constructor
 	public Coordinate(double coord){
 		// set variable _coordinate to passed coord
-		_coordinate = coord;
+		if(coord == -0.0) {
+			_coordinate = 0.0;
+		}else {
+			_coordinate = coord;
+		}
 	}
 
 	//Copy constructor

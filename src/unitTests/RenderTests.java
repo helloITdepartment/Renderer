@@ -133,4 +133,27 @@ public class RenderTests {
 		//Prints it all to a file
 		imageWriter.writeToImage();
 	}
+	
+	@Test
+	public void ballOnTheFloorTest() {
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		Camera camera = new Camera();
+		List<Geometry> geoList = new ArrayList<Geometry>();
+		Plane floor = new Plane(new Point3D(-1, -4, -1), new Point3D(1, -4, -1), new Point3D(-4, -4, -2), new Material(), new Color(200, 200, 200));
+		geoList.add(floor);
+		Sphere ball = new Sphere(1.475, new Point3D(0, 0, -1.5), new Material(), new Color(100, 100, 100));
+		geoList.add(ball);
+		List<LightSource> lightList = new ArrayList<LightSource>();
+		PointLight pointlgiht = new PointLight(new Point3D(1, -1, 0), 5.0, 5.0, 5.0, new Color(255, 0, 0));
+		lightList.add(pointlgiht);
+		Scene scene = new Scene("Ball on floor test", new Color(30, 30, 30), ambientLight, lightList, geoList, camera, 3.0);
+		ImageWriter imageWriter = new ImageWriter("ballOnTheFloorTest7", 500, 500, 100, 100);
+		//Creates a Render instance to pull it all together
+		Render render = new Render(scene, imageWriter);
+
+		//Records what the camera sees
+		render.renderImage();
+		//Prints it all to a file
+		imageWriter.writeToImage();
+	}
 }

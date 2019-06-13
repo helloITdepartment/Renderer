@@ -122,7 +122,12 @@ public class Plane extends Geometry{
 
 		//t holds the distance from the source of the ray (camera) to the plane
 		double t = (new Vector(_p1.subtract(r.getSource())).dotProduct(_normal))/denominator;
-
+		
+		if(t < 0) {
+			//returns an empty list of intersection
+			return listToReturn;
+		}
+		
 		//We scale the Ray by t to get the point of intersection of the ray and the plane
 		Point3D intersectedPoint = new Point3D(r.getSource().add(r.getDirection().scale(t)));
 
