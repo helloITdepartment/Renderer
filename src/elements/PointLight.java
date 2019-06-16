@@ -172,7 +172,7 @@ public class PointLight extends Light implements LightSource{
 
 	//Return the vector that a photon coming from this PointLight would travel along to intersect the given Point
 	public Vector getL(Point3D point) {
-		return new Vector(point.subtract(_position)).normalize();
+		return new Vector(point.subtract(_position));
 	}
 
 	//A method to scale colors which makes sure values never go over 255 or below 0

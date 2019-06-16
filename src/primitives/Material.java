@@ -16,7 +16,7 @@ public class Material {
 		//Sets _kD, _kS, and _nShininess to arbitrary values that seem to work
 		_kD = 0.8;
 		_kS = 0.99;
-		_nShininess = 50;
+		_nShininess = 5;
 	}
 	
 	//Parameterized constructor
