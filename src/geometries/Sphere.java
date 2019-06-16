@@ -86,7 +86,7 @@ public class Sphere extends RadialGeometry{
 		List<Point3D> listToReturn = new ArrayList<>();
 		
 		//l is the vector from the center of the camera to the center of the sphere
-		Vector l = new Vector(_center.subtract(new Point3D(0,0,0)));
+		Vector l = new Vector(_center.subtract(r.getSource()));
 		
 		//tM is the length of the base of a right triangle made by extending the Ray to the middle of the Sphere, where l is the hypotenuse
 		double tM = l.dotProduct(r.getDirection().normalize());
