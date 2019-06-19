@@ -50,6 +50,8 @@ public class Material {
 		_kD = other.getKd();
 		_kS = other.getKs();
 		_nShininess = other.getShininess();
+		_kR = other.getKr();
+		_kT = other.getKt();
 	}
 	
 	//Getters
