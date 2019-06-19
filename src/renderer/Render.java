@@ -17,7 +17,8 @@ public class Render {
 	Scene _scene;
 	//Image writer to handle all the image writing bits
 	ImageWriter _imageWriter;
-	
+	//Smallest factor to scale the color by. If we're scaling any lower than this we might as well just return black
+	public static final double MINIMUM_FACTOR = 0.001;
 	
 	//Constructors
 	//Default constructor
@@ -66,13 +67,15 @@ public class Render {
 				
 				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
 				if (pointsIntersected.isEmpty()) {
+					
 					_imageWriter.writePixel(i, j, _scene.getBackgroundColor());
+					
 				} else {
 
-					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected);
+					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, r.getSource());
 					Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
 					Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
-					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint));
+					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint, r, 1, 1.0));
 				}
 			}
 		}
@@ -118,7 +121,7 @@ public class Render {
 	
 	//Loops over all of the points and checks if they are the closer than the current record holder for closest point,
 	//And declares them the new closest point if they are
-	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> map) {
+	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> map, Point3D sourcePoint) {
 		//initializes the smallest distance at infinity so that any point in the list will be closer
 		Double smallestDistance = Double.POSITIVE_INFINITY;
 		//Creates a map to hold the closest point
@@ -129,7 +132,7 @@ public class Render {
 			//Loops through every point in that geometry that the ray intersected
 			for(Point3D point : map.get(geo)) {
 				//Checks if given point is closest, as mentioned above
-				if(_scene.getCamera().getP0().distanceTo(point) < smallestDistance) {
+				if(sourcePoint.distanceTo(point) < smallestDistance) {
 					//If so, updates the shortest distance
 					smallestDistance = _scene.getCamera().getP0().distanceTo(point);
 					//Clears the map so there isn't more than one point inside
@@ -144,7 +147,12 @@ public class Render {
 	}
 	
 	//Returns the color that the camera would see when looking at this point if it intercepted and object
-	private Color getColorAtPoint(Geometry geometry, Point3D point) {
+	private Color getColorAtPoint(Geometry geometry, Point3D point, Ray alongRay, int level, double factor) {
+		
+		//First things first, check if it's even worth calculating a color or if we've recursed too deep already
+		if(level <= 0 || factor < MINIMUM_FACTOR) {
+			return Color.BLACK;
+		}//otherwise, go ahead and calculate the color..
 		
 		//Stores the number of lights in the scene for calculation later
 		int numberOfLights = _scene.getLightsList().size();
@@ -188,9 +196,6 @@ public class Render {
 					totalGreen += calculatedSpecularLight.getGreen()/2;
 					totalBlue += calculatedSpecularLight.getBlue()/2;
 
-//					if(geometry instanceof Sphere) {
-//						print(geometry.getClass() + " Red: " + calculatedSpecularLight.getRed() + " Green: " + calculatedSpecularLight.getGreen() + " Blue: " + calculatedSpecularLight.getBlue());
-//					}
 				}
 			}
 
@@ -213,6 +218,13 @@ public class Render {
 		Vector r = l.subtract(normal.scale(2*l.dotProduct(normal)));
 		double factor = ks*Math.abs(Math.pow(v.normalize().dotProduct(r.normalize()), shininess));
 		return scaleColor(intensity, factor);
+	}
+	
+	private Ray constructReflectedRay(Vector normal, Point3D point, Ray originalRay) {
+		Vector originalVector = originalRay.getDirection();
+		Vector outgoingVector = originalVector.subtract(normal.scale(2*originalVector.dotProduct(normal)));
+		Ray reflectedRay = new Ray(point, outgoingVector);
+		return reflectedRay;
 	}
 	
 	//Helper method to scale colors properly without going out of range

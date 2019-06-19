@@ -153,7 +153,7 @@ public class RenderTests {
 		PointLight greenlight = new PointLight(new Point3D(4, 4, -1.75), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 		lightList.add(greenlight);
 		Scene scene = new Scene("Ball on floor test", new Color(30, 30, 30), ambientLight, lightList, geoList, camera, 10.0);
-		ImageWriter imageWriter = new ImageWriter("BallOnTheFloorTest", 1000, 1000, 100, 100);
+		ImageWriter imageWriter = new ImageWriter("BallOnTheFloorTest2", 1000, 1000, 100, 100);
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
 
