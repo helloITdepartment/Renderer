@@ -300,4 +300,11 @@ public class Render {
 	public static void print(String s) {
 		System.out.println(s);
 	}
+
+	private Color enhance(Color color) {
+		int max = Math.max(color.getRed(), color.getGreen());
+		max = Math.max(max, color.getBlue());
+		double factor = 255/(max*1.0);
+		return scaleColor(color, factor);
+	}
 }
