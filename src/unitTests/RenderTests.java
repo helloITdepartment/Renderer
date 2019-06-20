@@ -146,6 +146,9 @@ public class RenderTests {
 		Sphere ball = new Sphere(1.4985, new Point3D(0, -0.3, -1.75), new Material(), new Color(0, 0, 255));
 		geoList.add(ball);
 		
+		Sphere ballInBall = new Sphere(1.0, new Point3D(0, -0.3, -1.75), new Material(), new Color(255,255, 0));
+		geoList.add(ballInBall);
+		
 		List<LightSource> lightList = new ArrayList<LightSource>();
 		
 		PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
@@ -154,8 +157,8 @@ public class RenderTests {
 		PointLight greenlight = new PointLight(new Point3D(4, 4, -1.75), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 //		lightList.add(greenlight);
 		
-		Scene scene = new Scene("Ball on floor test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 10.0);
-		ImageWriter imageWriter = new ImageWriter("BallOnTheFloorTest17", 1000, 1000, 100, 100);
+		Scene scene = new Scene("Ball on floor test", new Color(50, 50, 50), ambientLight, lightList, geoList, camera, 10.0);
+		ImageWriter imageWriter = new ImageWriter("BallOnTheFloorTestWithR&RBackground", 1000, 1000, 100, 100);
 		
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);

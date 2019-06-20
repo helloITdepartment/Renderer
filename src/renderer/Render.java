@@ -20,7 +20,7 @@ public class Render {
 	//Smallest factor to scale the color by. If we're scaling any lower than this we might as well just return black
 	public static final double MINIMUM_FACTOR = 0.001;
 	//Known level of recursion to know how to scale the final Color at the end of calcColor 
-	public static final int LEVELS_OF_RECURSION = 2;
+	public static final int LEVELS_OF_RECURSION = 3;
 	
 	//Constructors
 	//Default constructor
@@ -222,23 +222,39 @@ public class Render {
 		totalBlue += colorFromReflection.getBlue();
 		
 		//Calculates the color at the point produced by transparency
-		//Color colorFromTransparency = getColorAtPoint(geometry, point, reflectedRay, level-1, factor*geometry.getMaterial().getKr());
+		//First gets the ray along which to evaluate the color
+		Ray refractedRay = constructRefractedRay(point, alongRay);
+		//Calculates which geometry get intersected by that ray first, if any
+		pointsIntersected = getSceneRayIntersections(refractedRay);
+		//Sets the color gained by refraction to be the background by default if it doesn't hit anything
+		Color colorFromRefraction = _scene.getBackgroundColor();
+		if (!pointsIntersected.isEmpty()) {//But if it does...
+			//Calculates the geometry and the point on that geometry that get hit
+			Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, refractedRay.getSource());
+			Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
+			Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
+			//And updates the color to be the color of the intersected point
+			colorFromRefraction = getColorAtPoint(closestGeometry, closestPoint, refractedRay, level-1, factor*geometry.getMaterial().getKt());
+		}
 		//And adds its elements to the running total
-		
+		totalRed += colorFromRefraction.getRed();
+		totalGreen += colorFromRefraction.getGreen();
+		totalBlue += colorFromRefraction.getBlue();
+
 		//Combines them into a new color
-		Color combinedColor = new Color((totalRed/(numberOfLights+3)), (totalGreen/(numberOfLights+3)), (totalBlue/(numberOfLights+3)));
+		//Color combinedColor = new Color((totalRed/(numberOfLights+3)), (totalGreen/(numberOfLights+3)), (totalBlue/(numberOfLights+3)));
 		//+2 for ambient and emission, then +2 for reflective and transparency
-		//Color combinedColor = new Color((totalRed/(numberOfLights+2+2)), (totalGreen/(numberOfLights+2+2)), (totalBlue/(numberOfLights+2+2)));
+		Color combinedColor = new Color((totalRed/(numberOfLights+2+2)), (totalGreen/(numberOfLights+2+2)), (totalBlue/(numberOfLights+2+2)));
 
 		return combinedColor;
 	}
-	
+
 	// private method to calculate the diffuse light (according to the formula from slides)
 	private Color calcDiffuseComp(Double kd, Vector normal, Vector l, Color intensity) {
 		double factor = Math.abs(kd*(normal.dotProduct(l)));
 		return scaleColor(intensity, factor);
 	}
-	
+
 	// private method to calculate the specular light (according to the formula from slides)
 	private Color calcSpecularComp(Double ks, Vector v, Vector normal, Vector l, int shininess, Color intensity) {
 		Vector r = l.subtract(normal.scale(2*l.dotProduct(normal)));
@@ -246,6 +262,7 @@ public class Render {
 		return scaleColor(intensity, factor);
 	}
 	
+	//Private method to construct the ray bounced off an objects
 	private Ray constructReflectedRay(Vector normal, Point3D point, Ray originalRay) {
 		Vector originalVector = originalRay.getDirection();
 		//Takes the original vector and uses it to calculate the reflected vector
@@ -258,6 +275,16 @@ public class Render {
 		return reflectedRay;
 	}
 	
+	//Private helper method to construct the ray that passes through a transparent object
+	private Ray constructRefractedRay(Point3D point, Ray ray) {
+		//The direction that the ray is traveling in and that the new one will travel in, because we are assuming a refractive index of 1 for all geometries
+		Vector direction = ray.getDirection().normalize();
+		//Takes the point of intersection and moves a little bit up the ray so we don't intersect with ourselves
+		Point3D source = point.add(direction.scale(0.0001));
+		
+		return new Ray(source, direction);
+		
+	}
 	//Helper method to scale colors properly without going out of range
 	public static Color scaleColor(Color color, double factor) {
 		int newRed = ((int)(color.getRed()*factor) <= 255 ? (int)(color.getRed()*factor) : 255);
