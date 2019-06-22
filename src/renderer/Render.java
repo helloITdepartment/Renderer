@@ -17,7 +17,10 @@ public class Render {
 	Scene _scene;
 	//Image writer to handle all the image writing bits
 	ImageWriter _imageWriter;
-	
+	//Smallest factor to scale the color by. If we're scaling any lower than this we might as well just return black
+	public static final double MINIMUM_FACTOR = 0.001;
+	//Known level of recursion to know how to scale the final Color at the end of calcColor 
+	public static final int LEVELS_OF_RECURSION = 3;
 	
 	//Constructors
 	//Default constructor
@@ -66,13 +69,15 @@ public class Render {
 				
 				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
 				if (pointsIntersected.isEmpty()) {
+					
 					_imageWriter.writePixel(i, j, _scene.getBackgroundColor());
+					
 				} else {
 
-					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected);
+					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, r.getSource());
 					Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
 					Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
-					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint));
+					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint, r, LEVELS_OF_RECURSION, 1.0));
 				}
 			}
 		}
@@ -118,7 +123,7 @@ public class Render {
 	
 	//Loops over all of the points and checks if they are the closer than the current record holder for closest point,
 	//And declares them the new closest point if they are
-	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> map) {
+	private Map<Geometry, Point3D> getClosestPoint(Map<Geometry, List<Point3D>> map, Point3D sourcePoint) {
 		//initializes the smallest distance at infinity so that any point in the list will be closer
 		Double smallestDistance = Double.POSITIVE_INFINITY;
 		//Creates a map to hold the closest point
@@ -129,7 +134,7 @@ public class Render {
 			//Loops through every point in that geometry that the ray intersected
 			for(Point3D point : map.get(geo)) {
 				//Checks if given point is closest, as mentioned above
-				if(_scene.getCamera().getP0().distanceTo(point) < smallestDistance) {
+				if(sourcePoint.distanceTo(point) < smallestDistance) {
 					//If so, updates the shortest distance
 					smallestDistance = _scene.getCamera().getP0().distanceTo(point);
 					//Clears the map so there isn't more than one point inside
@@ -144,7 +149,12 @@ public class Render {
 	}
 	
 	//Returns the color that the camera would see when looking at this point if it intercepted and object
-	private Color getColorAtPoint(Geometry geometry, Point3D point) {
+	private Color getColorAtPoint(Geometry geometry, Point3D point, Ray alongRay, int level, double factor) {
+		
+		//First things first, check if it's even worth calculating a color or if we've recursed too deep already
+		if(level <= 0 || factor < MINIMUM_FACTOR) {
+			return Color.BLACK;
+		}//otherwise, go ahead and calculate the color..
 		
 		//Stores the number of lights in the scene for calculation later
 		int numberOfLights = _scene.getLightsList().size();
@@ -188,26 +198,63 @@ public class Render {
 					totalGreen += calculatedSpecularLight.getGreen()/2;
 					totalBlue += calculatedSpecularLight.getBlue()/2;
 
-//					if(geometry instanceof Sphere) {
-//						print(geometry.getClass() + " Red: " + calculatedSpecularLight.getRed() + " Green: " + calculatedSpecularLight.getGreen() + " Blue: " + calculatedSpecularLight.getBlue());
-//					}
 				}
 			}
 
 		}
 
+		Ray reflectedRay = constructReflectedRay(geometry.getNormal(point), point, alongRay);
+		//Calculates which geometry get intersected by that ray first, if any
+		Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(reflectedRay);
+		//Sets the color gained by reflection to be the background by default if it doesn't hit anything
+		Color colorFromReflection = _scene.getBackgroundColor();
+		if (!pointsIntersected.isEmpty()) {//But if it does...
+			//Calculates the geometry and the point on that geometry that get hit
+			Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, reflectedRay.getSource());
+			Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
+			Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
+			//And updates the color to be the color of the intersected point
+			colorFromReflection = getColorAtPoint(closestGeometry, closestPoint, reflectedRay, level-1, factor*geometry.getMaterial().getKr());
+		}
+		//And adds its elements to the running total
+		totalRed += colorFromReflection.getRed();
+		totalGreen += colorFromReflection.getGreen();
+		totalBlue += colorFromReflection.getBlue();
+		
+		//Calculates the color at the point produced by transparency
+		//First gets the ray along which to evaluate the color
+		Ray refractedRay = constructRefractedRay(point, alongRay);
+		//Calculates which geometry get intersected by that ray first, if any
+		pointsIntersected = getSceneRayIntersections(refractedRay);
+		//Sets the color gained by refraction to be the background by default if it doesn't hit anything
+		Color colorFromRefraction = _scene.getBackgroundColor();
+		if (!pointsIntersected.isEmpty()) {//But if it does...
+			//Calculates the geometry and the point on that geometry that get hit
+			Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, refractedRay.getSource());
+			Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
+			Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
+			//And updates the color to be the color of the intersected point
+			colorFromRefraction = getColorAtPoint(closestGeometry, closestPoint, refractedRay, level-1, factor*geometry.getMaterial().getKt());
+		}
+		//And adds its elements to the running total
+		totalRed += colorFromRefraction.getRed();
+		totalGreen += colorFromRefraction.getGreen();
+		totalBlue += colorFromRefraction.getBlue();
+
 		//Combines them into a new color
-		Color combinedColor = new Color((totalRed/(numberOfLights+2)), (totalGreen/(numberOfLights+2)), (totalBlue/(numberOfLights+2)));
+		//Color combinedColor = new Color((totalRed/(numberOfLights+3)), (totalGreen/(numberOfLights+3)), (totalBlue/(numberOfLights+3)));
+		//+2 for ambient and emission, then +2 for reflective and transparency
+		Color combinedColor = new Color((totalRed/(numberOfLights+2+2)), (totalGreen/(numberOfLights+2+2)), (totalBlue/(numberOfLights+2+2)));
 
 		return combinedColor;
 	}
-	
+
 	// private method to calculate the diffuse light (according to the formula from slides)
 	private Color calcDiffuseComp(Double kd, Vector normal, Vector l, Color intensity) {
 		double factor = Math.abs(kd*(normal.dotProduct(l)));
 		return scaleColor(intensity, factor);
 	}
-	
+
 	// private method to calculate the specular light (according to the formula from slides)
 	private Color calcSpecularComp(Double ks, Vector v, Vector normal, Vector l, int shininess, Color intensity) {
 		Vector r = l.subtract(normal.scale(2*l.dotProduct(normal)));
@@ -215,6 +262,29 @@ public class Render {
 		return scaleColor(intensity, factor);
 	}
 	
+	//Private method to construct the ray bounced off an objects
+	private Ray constructReflectedRay(Vector normal, Point3D point, Ray originalRay) {
+		Vector originalVector = originalRay.getDirection();
+		//Takes the original vector and uses it to calculate the reflected vector
+		Vector outgoingVector = originalVector.subtract(normal.scale(2*originalVector.dotProduct(normal)));
+		//Vector outgoingVector = normal.scale(2*normal.dotProduct(originalVector)).subtract(originalVector);
+		//Creates a new Ray to return
+		Ray reflectedRay = new Ray(point, outgoingVector);
+		//Slides the point that the ray emanates from up the vector a little bit so that when we check the next intersection, we don't intersect ourselves
+		reflectedRay.setSource(point.add(reflectedRay.getDirection().scale(.0001)));
+		return reflectedRay;
+	}
+	
+	//Private helper method to construct the ray that passes through a transparent object
+	private Ray constructRefractedRay(Point3D point, Ray ray) {
+		//The direction that the ray is traveling in and that the new one will travel in, because we are assuming a refractive index of 1 for all geometries
+		Vector direction = ray.getDirection().normalize();
+		//Takes the point of intersection and moves a little bit up the ray so we don't intersect with ourselves
+		Point3D source = point.add(direction.scale(0.0001));
+		
+		return new Ray(source, direction);
+		
+	}
 	//Helper method to scale colors properly without going out of range
 	public static Color scaleColor(Color color, double factor) {
 		int newRed = ((int)(color.getRed()*factor) <= 255 ? (int)(color.getRed()*factor) : 255);
@@ -229,5 +299,12 @@ public class Render {
 
 	public static void print(String s) {
 		System.out.println(s);
+	}
+
+	private Color enhance(Color color) {
+		int max = Math.max(color.getRed(), color.getGreen());
+		max = Math.max(max, color.getBlue());
+		double factor = 255/(max*1.0);
+		return scaleColor(color, factor);
 	}
 }
