@@ -117,7 +117,7 @@ public class SpotLight extends PointLight implements LightSource{
 		//Finds the distance to that point
 		double distance = _position.distanceTo(point);
 		//Calculates the amount to scale the color by, given the constant, linear, and quadratic attenuation factors
-		double factor = (_direction.dotProduct(getL(point))) / (_Kc + _Kl*distance + _Kq*distance*distance);
+		double factor = (_direction.dotProduct(getL(point))) / (_Kc + _Kl/distance + _Kq/(distance*distance));
 		return scaleColor(getColor(), factor);
 	}
 

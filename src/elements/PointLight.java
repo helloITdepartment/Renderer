@@ -165,7 +165,8 @@ public class PointLight extends Light implements LightSource{
 	//Returns a version of _color, where each component is scaled by _kA, representing the color
 	public Color getIntensity(Point3D point) {
 		double distance = _position.distanceTo(point);
-		double factor = (_Kc + _Kl*distance + _Kq*distance*distance);
+		double factor = (_Kc + Math.pow(_Kl, distance) + Math.pow(_Kq, distance*distance));
+				//(_Kc + _Kl/distance + _Kq/(distance*distance));
 		
 		return scaleColor(getColor(), factor);
 	}
