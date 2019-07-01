@@ -193,9 +193,6 @@ public class RenderTests {
 		Sphere ball = new Sphere(1.4985, new Point3D(0, 1, -2.9), new Material(0.8, 0.99, 5, 0.99, 0.99), new Color(0, 0, 255));
 		geoList.add(ball);
 		
-		Sphere ball2 = new Sphere(1, new Point3D(0, -3, -2.5), new Material(0.8, 0.99, 5, 0.99, 0.99), new Color(0, 0, 255));
-//		geoList.add(ball2);
-		
 		//Sets up an empty list of lights
 		List<LightSource> lights = new ArrayList<LightSource>();
 		//Creates a spotlight to add to our scene
@@ -278,4 +275,122 @@ public class RenderTests {
 		//Prints it all to a file
 		imageWriter.writeToImage();
 	}
+
+	@Test
+	public void slideToTheLeftTest() {
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		Camera camera = new Camera();
+		List<Geometry> geoList = new ArrayList<Geometry>();
+		for(double i = 5; i>-5; i-= 0.5) {
+			geoList.clear();
+			Sphere ball = new Sphere(1.4985, new Point3D(i, 0, -10), new Material(), new Color(0, 0, 255));
+			geoList.add(ball);
+
+			List<LightSource> lightList = new ArrayList<LightSource>();
+
+			PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
+			//		lightList.add(pointlight);
+
+			PointLight greenlight = new PointLight(new Point3D(0, -2, -8), 0.5, 0.5, 0.5, new Color(0, 255, 0));
+			lightList.add(greenlight);
+
+			Scene scene = new Scene("Slide tot he left test", new Color(50, 50, 50), ambientLight, lightList, geoList, camera, 100.0);
+			ImageWriter imageWriter = new ImageWriter(("SlideToTheLeftTest@" + (i+5)), 1000, 1000, 100, 100);
+
+			//Creates a Render instance to pull it all together
+			Render render = new Render(scene, imageWriter);
+
+			//Records what the camera sees
+			render.renderImage();
+			//Prints it all to a file
+			imageWriter.writeToImage();
+		}
+	}
+
+	@Test
+	public void frontToBackTest() {
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		Camera camera = new Camera();
+		List<Geometry> geoList = new ArrayList<Geometry>();
+
+		Sphere center = new Sphere(1.4985, new Point3D(0, 0, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(center);
+
+		Sphere up = new Sphere(1.4985, new Point3D(0, 10, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(up);
+
+		Sphere down = new Sphere(1.4985, new Point3D(0, -10, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(down);
+
+		Sphere left = new Sphere(1.4985, new Point3D(-10, 0, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(left);
+
+		Sphere right = new Sphere(1.4985, new Point3D(10, 0, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(right);
+
+		List<LightSource> lightList = new ArrayList<LightSource>();
+
+		PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
+		//		lightList.add(pointlight);
+
+		PointLight greenlight = new PointLight(new Point3D(4, 4, -1.75), 0.5, 0.5, 0.5, new Color(0, 255, 0));
+		//		lightList.add(greenlight);
+
+		Double[] distanceList = {5.0, 10.0, 20.0, 25.0, 50.0, 100.0};
+		
+		for(int i = 0; i<distanceList.length; i++) {
+			Scene scene = new Scene("Front to back test", new Color(50, 50, 50), ambientLight, lightList, geoList, camera, distanceList[i]);
+			ImageWriter imageWriter = new ImageWriter(("FrontToBackTest@" + distanceList[i]), 1000, 1000, 100, 100);
+
+			//Creates a Render instance to pull it all together
+			Render render = new Render(scene, imageWriter);
+
+			//Records what the camera sees
+			render.renderImage();
+			//Prints it all to a file
+			imageWriter.writeToImage();
+		}
+	}
+
+	@Test
+	public void focusTest() {
+		AmbientLight ambientLight = new AmbientLight(new Color(255, 255, 255), 1.0);
+		Camera camera = new Camera();
+		List<Geometry> geoList = new ArrayList<Geometry>();
+		
+		Sphere ball1 = new Sphere(0.75, new Point3D(-3, 0, -8), new Material(), new Color(0, 0, 255));
+		geoList.add(ball1);
+		
+		Sphere ball2 = new Sphere(0.75, new Point3D(-1.5, 0, -9), new Material(), new Color(0, 0, 255));
+		geoList.add(ball2);
+		
+		Sphere ball3 = new Sphere(0.75, new Point3D(0.5, 0, -10), new Material(), new Color(0, 0, 255));
+		geoList.add(ball3);
+		
+		Sphere ball4 = new Sphere(0.75, new Point3D(2.5, 0, -11), new Material(), new Color(0, 0, 255));
+		geoList.add(ball4);
+		
+		Sphere ball5 = new Sphere(0.75, new Point3D(5, 0, -12), new Material(), new Color(0, 0, 255));
+		geoList.add(ball5);
+
+		List<LightSource> lightList = new ArrayList<LightSource>();
+
+		PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
+		//		lightList.add(pointlight);
+
+		PointLight greenlight = new PointLight(new Point3D(0, -2.5, -8), 0.5, 0.5, 0.5, new Color(0, 255, 0));
+		lightList.add(greenlight);
+
+		Scene scene = new Scene("Focus Test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 100.0);
+		ImageWriter imageWriter = new ImageWriter(("FocusTest3"), 1000, 1000, 100, 100);
+
+		//Creates a Render instance to pull it all together
+		Render render = new Render(scene, imageWriter);
+
+		//Records what the camera sees
+		render.renderImage();
+		//Prints it all to a file
+		imageWriter.writeToImage();
+	}
+	
 }

@@ -42,14 +42,14 @@ public class Camera {
 				
 		Point3D centerPixel = _p0.add(_vTo.scale(screenDistance));
 		//Horizontal size per pixel
-		double ratioX = (screenWidth/pixelsInXDirection);
+		double pixelWidth = (screenWidth/pixelsInXDirection);
 		//Vertical size per pixel
-		double ratioY = (screenHeight/pixelsInYDirection);
+		double pixelHeight = (screenHeight/pixelsInYDirection);
 
-		Vector leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*ratioX) - (ratioX/2.0));
+		Vector leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth) - (pixelWidth/2.0));
 		//System.out.println(leftHandSide.toString());
 		
-		Vector rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*ratioY) - (ratioY/2.0));
+		Vector rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0));
 		//System.out.println(rightHandSide.toString());
 		
 		
