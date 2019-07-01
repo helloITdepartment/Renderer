@@ -20,7 +20,9 @@ public class Render {
 	//Smallest factor to scale the color by. If we're scaling any lower than this we might as well just return black
 	public static final double MINIMUM_FACTOR = 0.001;
 	//Known level of recursion to know how to scale the final Color at the end of calcColor 
-	public static final int LEVELS_OF_RECURSION = 3;
+	public static final int LEVELS_OF_RECURSION = 2;
+	//Variable used to toggle between using the focus plane and rendering regular
+	public static final boolean USING_FOCUS = false;
 	
 	//Constructors
 	//Default constructor
@@ -61,11 +63,51 @@ public class Render {
 	}
 	
 	public void renderImage() {
+		if(USING_FOCUS) {
+			renderImageWithFocus();
+		}else {
+			renderImageRegular();
+		}
+	}
+	
+	public void renderImageRegular() {
 		for(int i = 0; i < _imageWriter.getWidth(); i++) {
 			
 			for(int j = 0; j < _imageWriter.getHeight(); j++) {
 				//Constructs the ray shot from the camera through a particular pixel
 				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+				
+				//The list of everything intersected by that ray
+				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
+				
+				if (pointsIntersected.isEmpty()) {//Nothing in front of the ray, just use the background color
+					
+					_imageWriter.writePixel(i, j, _scene.getBackgroundColor());
+					
+				} else {
+					//Calculates which intersected point is closest, and returns a map noting the point and which geometry it's on
+					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, r.getSource());
+					//Separates out the values to pass into getColor
+					Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
+					Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
+					//Calculate the color on the geometry at the right point, and start the recursion level off at the predetermined level, and a factor off
+					//Then writes that color to pixel (i,j)
+					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint, r, LEVELS_OF_RECURSION, 1.0));
+				}
+			}
+		}
+		
+	}
+	
+	public void renderImageWithFocus() {
+		for(int i = 0; i < _imageWriter.getWidth(); i++) {
+			
+			for(int j = 0; j < _imageWriter.getHeight(); j++) {
+				//Constructs the ray shot from the camera through a particular pixel
+				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+				Ray topRight = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+				Ray bottomLeft = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+				Ray bottomRight = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
 				
 				//The list of everything intersected by that ray
 				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
