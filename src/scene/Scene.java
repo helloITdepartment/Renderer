@@ -24,6 +24,8 @@ public class Scene {
 	Camera _camera;
 	//How far from the camera is the screen we're looking through
 	double _screenDistance;
+	//How far the camera is from the focal plane
+	double _focalDistance;
 
 	//TODO- Write constructors, setters
 
@@ -57,20 +59,38 @@ public class Scene {
 		_screenDistance = screenDistance;
 	}
 
+	//Parameterized constructors
+	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, List<LightSource> lights, List<Geometry> geometryList, Camera camera, double screenDistance, double focalDistance) {
+		_sceneName = sceneName;
+		_backgroundColor = backgroundColor;
+		_ambientLight = ambientLight;
+		_lights = lights;
+		_geometryList = geometryList;
+		_camera = camera;
+		_screenDistance = screenDistance;
+		_focalDistance = focalDistance;
+	}
+
 	//Since Java doesn't really do default parameters, this is how we can use a constructor without all the variables
 	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, Camera camera, double screenDistance) {
 		this(sceneName, backgroundColor, ambientLight, new ArrayList<LightSource>(), new ArrayList<Geometry>(), camera, screenDistance);
 	}
 
+	//Since Java doesn't really do default parameters, this is how we can use a constructor without all the variables
+	public Scene(String sceneName, Color backgroundColor, AmbientLight ambientLight, Camera camera, double screenDistance, double focalDistance) {
+		this(sceneName, backgroundColor, ambientLight, new ArrayList<LightSource>(), new ArrayList<Geometry>(), camera, screenDistance, focalDistance);
+	}
+
 	//Copy constructor
 	public Scene(Scene other) {
-		_sceneName = other._sceneName;
-		_backgroundColor = other._backgroundColor;
-		_ambientLight = other._ambientLight;
-		_lights = other._lights;
-		_geometryList = other._geometryList;
-		_camera = other._camera;
-		_screenDistance = other._screenDistance;
+		_sceneName = other.getSceneName();
+		_backgroundColor = other.getBackgroundColor();
+		_ambientLight = other.getAmbientLight();
+		_lights = other.getLightsList();
+		_geometryList = other.getGeometryList();
+		_camera = other.getCamera();
+		_screenDistance = other.getScreenDistance();
+		_focalDistance = other.getFocalDistance();
 	}
 
 
@@ -114,6 +134,10 @@ public class Scene {
 		return _screenDistance;
 	}
 
+	public double getFocalDistance() {
+		return _focalDistance;
+	}
+	
 	//Setters
 	public void setSceneName(String sceneName) {
 		//Allows for setting of protected data member _sceneName;
@@ -143,6 +167,10 @@ public class Scene {
 	public void setScreenDistance(double screenDistance) {
 		//Allows for setting of protected data member _screenDistance
 		_screenDistance = screenDistance;
+	}
+	
+	public void setFocalDistance(double focalDistance) {
+		_focalDistance = focalDistance;
 	}
 
 	//Method to add an object to our list of things

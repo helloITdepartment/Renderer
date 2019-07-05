@@ -381,8 +381,8 @@ public class RenderTests {
 		PointLight greenlight = new PointLight(new Point3D(0, -2.5, -8), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 		lightList.add(greenlight);
 
-		Scene scene = new Scene("Focus Test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 100.0);
-		ImageWriter imageWriter = new ImageWriter(("FocusTest3"), 1000, 1000, 100, 100);
+		Scene scene = new Scene("Focus Test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 5.0, 10.0);
+		ImageWriter imageWriter = new ImageWriter(("FocusTest8t"), 1000, 1000, 5, 5);
 
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);

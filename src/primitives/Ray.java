@@ -59,5 +59,12 @@ public class Ray{
 		//returns 1 if both source and direction match, 0 otherwise
 		return ((sourceMatches && directionMatches) ? 1 : 0);
 	}
+	
+	public String toString() {
+		String result = "";
+		result += "Source: " + _source;
+		result += ", Direction: " + _direction;
+		return result;
+	}
 
 }

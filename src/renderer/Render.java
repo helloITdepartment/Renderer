@@ -22,7 +22,7 @@ public class Render {
 	//Known level of recursion to know how to scale the final Color at the end of calcColor 
 	public static final int LEVELS_OF_RECURSION = 2;
 	//Variable used to toggle between using the focus plane and rendering regular
-	public static final boolean USING_FOCUS = false;
+	public static final boolean USING_FOCUS = true;
 	
 	//Constructors
 	//Default constructor
@@ -98,39 +98,53 @@ public class Render {
 		}
 		
 	}
-	
+
 	public void renderImageWithFocus() {
 		for(int i = 0; i < _imageWriter.getWidth(); i++) {
-			
+
 			for(int j = 0; j < _imageWriter.getHeight(); j++) {
-				//Constructs the ray shot from the camera through a particular pixel
-				Ray r = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
-				Ray topRight = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
-				Ray bottomLeft = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
-				Ray bottomRight = _scene.getCamera().constructRayThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy());
+
+				int totalRed = 0;
+				int totalGreen = 0;
+				int totalBlue = 0;
+
+				//Constructs the rays shot from the camera through a particular pixel
+
+				Ray[] focusRays = _scene.getCamera().constructFocusRaysThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy(), _scene.getFocalDistance(), _scene.getCamera().getAperture());
+
+				//print("New pixel");
 				
-				//The list of everything intersected by that ray
-				Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(r);
-				
-				if (pointsIntersected.isEmpty()) {//Nothing in front of the ray, just use the background color
-					
-					_imageWriter.writePixel(i, j, _scene.getBackgroundColor());
-					
-				} else {
-					//Calculates which intersected point is closest, and returns a map noting the point and which geometry it's on
-					Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, r.getSource());
-					//Separates out the values to pass into getColor
-					Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
-					Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
-					//Calculate the color on the geometry at the right point, and start the recursion level off at the predetermined level, and a factor off
-					//Then writes that color to pixel (i,j)
-					_imageWriter.writePixel(i, j, getColorAtPoint(closestGeometry, closestPoint, r, LEVELS_OF_RECURSION, 1.0));
+				for (Ray ray : focusRays) {
+					//print(ray.toString());
+					//The list of everything intersected by that ray
+					Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(ray);
+
+					if (pointsIntersected.isEmpty()) {//Nothing in front of the ray, don't add anything to the color components (equivalent to adding black)
+						//System.out.println("Miss");
+					} else {
+						//System.out.println("Hit");
+						//Calculates which intersected point is closest, and returns a map noting the point and which geometry it's on
+						Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, ray.getSource());
+						//Separates out the values to pass into getColor
+						Geometry closestGeometry = (Geometry) closestPointMap.keySet().toArray()[0];
+						Point3D closestPoint = (Point3D) closestPointMap.values().toArray()[0];
+						//Calculate the color on the geometry at the right point, and start the recursion level off at the predetermined level, and a factor off
+						//Then writes that color to pixel (i,j)
+						Color color = getColorAtPoint(closestGeometry, closestPoint, ray, LEVELS_OF_RECURSION, 1.0);
+						//System.out.println("Red: " + color.getRed() + ", green: " + color.getGreen() + ", blue: " + color.getBlue());
+						totalRed += color.getRed()/4;
+						totalGreen += color.getGreen()/4;
+						totalBlue += color.getBlue()/4;
+					}
+
 				}
+				Color totalColor = new Color(totalRed, totalGreen, totalBlue);
+				_imageWriter.writePixel(i, j, totalColor);
 			}
 		}
-		
+
 	}
-	
+
 	//Prints a grid onto the image, with squares of (interval) across and up, to help visualize things
 	public void printGrid(int interval) {
 		for(int i = 0; i < _imageWriter.getWidth(); i++) {
