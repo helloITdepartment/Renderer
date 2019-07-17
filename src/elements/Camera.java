@@ -61,13 +61,9 @@ public class Camera {
 		double pixelHeight = (screenHeight/pixelsInYDirection);
 
 		Vector leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth) - (pixelWidth/2.0));
-		//System.out.println(leftHandSide.toString());
 		
 		Vector rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0));
-		//System.out.println(rightHandSide.toString());
 		
-		
-		//P = centerPixel + (leftHandSide - rightHandSide)	
 		Ray ray = new Ray(_p0, new Vector(centerPixel.add(leftHandSide.subtract(rightHandSide))));
 		
 		return ray;
@@ -78,7 +74,6 @@ public class Camera {
 	public Ray[] constructFocusRaysThroughPixel(int pixelsInXDirection, int pixelsInYDirection, double xCoordinate, double yCoordinate, double screenDistance, double screenWidth, double screenHeight, double focalPlaneDistance, double aperture) {
 
 		Point3D centerPoint = _p0.add(_vTo.scale(screenDistance));
-//		Point3D focalPoint = _p0.add(_vTo.scale(focalPlaneDistance));
 		//Horizontal size per pixel
 		double pixelWidth = (screenWidth/pixelsInXDirection);
 		//Vertical size per pixel
@@ -86,10 +81,9 @@ public class Camera {
 		
 		//Calculate the point on the focal plane through this pixel
 		Vector leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth)  - (pixelWidth/2.0));
-		//System.out.println(leftHandSide.toString());
+		
 		Vector rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0));
-		//System.out.println(rightHandSide.toString());
-		//P = centerPixel + (leftHandSide - rightHandSide)	
+		
 		Vector v = new Vector(centerPoint.add(leftHandSide.subtract(rightHandSide)));
 		//Vector that stretches from the camera to the focal plane
 		Vector centerVector = v.scale(focalPlaneDistance/v.getHead().getZ().getCoordinate()*(-1));
@@ -97,40 +91,36 @@ public class Camera {
 
 		//Calculate top left ray from the view screen to the focal plane
 		leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth)  - (pixelWidth/2.0)  - (aperture/2));
-		//System.out.println(leftHandSide.toString());
+		
 		rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0) + (aperture/2));
-		//System.out.println(rightHandSide.toString());
-		//P = centerPixel + (leftHandSide - rightHandSide)	
+			
 		v = new Vector(centerPoint.add(leftHandSide.subtract(rightHandSide)));
 		Point3D topLeftPoint = v.getHead();
 		Ray topLeftRay = new Ray(topLeftPoint, new Vector(focalPoint.subtract(topLeftPoint)));
 
 		//Calculate top right ray from the view screen to the focal plane
 		leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth)  - (pixelWidth/2.0)  + (aperture/2));
-		//System.out.println(leftHandSide.toString());
+		
 		rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0) + (aperture/2));
-		//System.out.println(rightHandSide.toString());
-		//P = centerPixel + (leftHandSide - rightHandSide)	
+			
 		v = new Vector(centerPoint.add(leftHandSide.subtract(rightHandSide)));
 		Point3D topRightPoint = v.getHead();
 		Ray topRightRay = new Ray(topRightPoint, new Vector(focalPoint.subtract(topRightPoint)));
 
 		//Calculate bottom left ray from the view screen to the focal plane
 		leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth)  - (pixelWidth/2.0)  - (aperture/2));
-		//System.out.println(leftHandSide.toString());
+		
 		rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0) - (aperture/2));
-		//System.out.println(rightHandSide.toString());
-		//P = centerPixel + (leftHandSide - rightHandSide)	
+		
 		v = new Vector(centerPoint.add(leftHandSide.subtract(rightHandSide)));
 		Point3D bottomLeftPoint = v.getHead();
 		Ray bottomLeftRay = new Ray(bottomLeftPoint, new Vector(focalPoint.subtract(bottomLeftPoint)));
 
 		//Calculate bottom right ray from the view screen to the focal plane
 		leftHandSide = _vRight.scale((( xCoordinate-(pixelsInXDirection/2.0) )*pixelWidth)  - (pixelWidth/2.0)  + (aperture/2));
-		//System.out.println(leftHandSide.toString());
+		
 		rightHandSide =   _vUp.scale((( yCoordinate-(pixelsInYDirection/2.0) )*pixelHeight) - (pixelHeight/2.0) - (aperture/2));
-		//System.out.println(rightHandSide.toString());
-		//P = centerPixel + (leftHandSide - rightHandSide)	
+		
 		v = new Vector(centerPoint.add(leftHandSide.subtract(rightHandSide)));
 		Point3D bottomRightPoint = v.getHead();
 		Ray bottomRightRay = new Ray(bottomRightPoint, new Vector(focalPoint.subtract(bottomRightPoint)));

@@ -19,7 +19,6 @@ public class Ray{
 		//sets source and direction to given source and direction
 		_source = source;
 		_direction = direction;
-//		_direction = direction.normalize();
 	}	
 	
 	//Copy constructor

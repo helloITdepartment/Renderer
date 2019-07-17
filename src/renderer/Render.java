@@ -20,7 +20,7 @@ public class Render {
 	//Smallest factor to scale the color by. If we're scaling any lower than this we might as well just return black
 	public static final double MINIMUM_FACTOR = 0.001;
 	//Known level of recursion to know how to scale the final Color at the end of calcColor 
-	public static final int LEVELS_OF_RECURSION = 2;
+	public static final int LEVELS_OF_RECURSION = 1;
 	//Variable used to toggle between using the focus plane and rendering regular
 	public static final boolean USING_FOCUS = true;
 	
@@ -110,19 +110,18 @@ public class Render {
 
 				//Constructs the rays shot from the camera through a particular pixel
 
-				Ray[] focusRays = _scene.getCamera().constructFocusRaysThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(), _imageWriter.getNx(), _imageWriter.getNy(), _scene.getFocalDistance(), _scene.getCamera().getAperture());
-
-				//print("New pixel");
+				Ray[] focusRays = _scene.getCamera().constructFocusRaysThroughPixel(_imageWriter.getWidth(), _imageWriter.getHeight(), i, j, _scene.getScreenDistance(),
+																					_imageWriter.getNx(), _imageWriter.getNy(), _scene.getFocalDistance(),
+																					_scene.getCamera().getAperture());
 				
 				for (Ray ray : focusRays) {
-					//print(ray.toString());
+
 					//The list of everything intersected by that ray
 					Map<Geometry, List<Point3D>>  pointsIntersected = getSceneRayIntersections(ray);
 
 					if (pointsIntersected.isEmpty()) {//Nothing in front of the ray, don't add anything to the color components (equivalent to adding black)
-						//System.out.println("Miss");
+						
 					} else {
-						//System.out.println("Hit");
 						//Calculates which intersected point is closest, and returns a map noting the point and which geometry it's on
 						Map<Geometry, Point3D> closestPointMap = getClosestPoint(pointsIntersected, ray.getSource());
 						//Separates out the values to pass into getColor
@@ -131,7 +130,6 @@ public class Render {
 						//Calculate the color on the geometry at the right point, and start the recursion level off at the predetermined level, and a factor off
 						//Then writes that color to pixel (i,j)
 						Color color = getColorAtPoint(closestGeometry, closestPoint, ray, LEVELS_OF_RECURSION, 1.0);
-						//System.out.println("Red: " + color.getRed() + ", green: " + color.getGreen() + ", blue: " + color.getBlue());
 						totalRed += color.getRed()/4;
 						totalGreen += color.getGreen()/4;
 						totalBlue += color.getBlue()/4;
@@ -334,7 +332,7 @@ public class Render {
 		//Vector outgoingVector = normal.scale(2*normal.dotProduct(originalVector)).subtract(originalVector);
 		//Creates a new Ray to return
 		Ray reflectedRay = new Ray(point, outgoingVector);
-		//Slides the point that the ray emanates from up the vector a little bit so that when we check the next intersection, we don't intersect ourselves
+		//Slides the point that the ray emanates (is that how you spell it?) from up the vector a little bit so that when we check the next intersection, we don't intersect ourselves
 		reflectedRay.setSource(point.add(reflectedRay.getDirection().scale(.0001)));
 		return reflectedRay;
 	}

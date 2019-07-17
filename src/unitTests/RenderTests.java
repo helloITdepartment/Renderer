@@ -256,13 +256,9 @@ public class RenderTests {
 		List<Geometry> geoList = new ArrayList<Geometry>();
 		Plane floor = new Plane(new Point3D(-10, -3, -1), new Point3D(10, -3, -1), new Point3D(0, -3, -12), new Material(), new Color(200, 200, 200));
 		geoList.add(floor);
-//		Triangle floor1 = new Triangle(new Point3D(-1.5, -3, 0), new Point3D(1.5, -3, 0), new Point3D(1.5, -3, 3), new Material(), new Color(200, 200, 200));
-//		geoList.add(floor1);
-//		Triangle floor2 = new Triangle(new Point3D(-1.5, -3, 0), new Point3D(-1.5, -3, 3), new Point3D(1.5, -3, 3), new Material(), new Color(200, 200, 200));
-//		geoList.add(floor2);
 		List<LightSource> lightList = new ArrayList<LightSource>();
 		PointLight pointlight = new PointLight(new Point3D(-25, 25, -20.0), 0.9, 0.9, 0.9, new Color(255, 0, 0));
-		//lightList.add(pointlight);
+		lightList.add(pointlight);
 		PointLight greenlight = new PointLight(new Point3D(0, 0, -1), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 		lightList.add(greenlight);
 		Scene scene = new Scene("Floor test", new Color(30, 30, 30), ambientLight, lightList, geoList, camera, 10.0);
@@ -289,7 +285,7 @@ public class RenderTests {
 			List<LightSource> lightList = new ArrayList<LightSource>();
 
 			PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
-			//		lightList.add(pointlight);
+					lightList.add(pointlight);
 
 			PointLight greenlight = new PointLight(new Point3D(0, -2, -8), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 			lightList.add(greenlight);
@@ -331,10 +327,10 @@ public class RenderTests {
 		List<LightSource> lightList = new ArrayList<LightSource>();
 
 		PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
-		//		lightList.add(pointlight);
+				lightList.add(pointlight);
 
 		PointLight greenlight = new PointLight(new Point3D(4, 4, -1.75), 0.5, 0.5, 0.5, new Color(0, 255, 0));
-		//		lightList.add(greenlight);
+				lightList.add(greenlight);
 
 		Double[] distanceList = {5.0, 10.0, 20.0, 25.0, 50.0, 100.0};
 		
@@ -358,31 +354,39 @@ public class RenderTests {
 		Camera camera = new Camera();
 		List<Geometry> geoList = new ArrayList<Geometry>();
 		
-		Sphere ball1 = new Sphere(0.75, new Point3D(-3, 0, -8), new Material(), new Color(0, 0, 255));
+		Sphere ball1 = new Sphere(0.75, new Point3D(-3, 0, -68), new Material(), new Color(255, 0, 0));
 		geoList.add(ball1);
 		
-		Sphere ball2 = new Sphere(0.75, new Point3D(-1.5, 0, -9), new Material(), new Color(0, 0, 255));
+		Sphere ball2 = new Sphere(0.75, new Point3D(-1.5, 0, -69), new Material(), new Color(255, 140, 0));
 		geoList.add(ball2);
 		
-		Sphere ball3 = new Sphere(0.75, new Point3D(0.5, 0, -10), new Material(), new Color(0, 0, 255));
+		Sphere ball3 = new Sphere(0.75, new Point3D(0.5, 0, -70), new Material(), new Color(255, 255, 0));
 		geoList.add(ball3);
 		
-		Sphere ball4 = new Sphere(0.75, new Point3D(2.5, 0, -11), new Material(), new Color(0, 0, 255));
+		Sphere ball4 = new Sphere(0.75, new Point3D(2.5, 0, -71), new Material(), new Color(0, 255, 255));
 		geoList.add(ball4);
 		
-		Sphere ball5 = new Sphere(0.75, new Point3D(5, 0, -12), new Material(), new Color(0, 0, 255));
+		Sphere ball5 = new Sphere(0.75, new Point3D(5, 0, -72), new Material(), new Color(0, 0, 255));
 		geoList.add(ball5);
+		
+		Triangle t1 = new Triangle(new Point3D(-5,2,-73), new Point3D(-3,-3,-73), new Point3D(-1,3,-73), new Material(), randomColor());
+		geoList.add(t1);
+		
+		Triangle t2 = new Triangle(new Point3D(-5,2,-73), new Point3D(-3,-3,-73), new Point3D(-5,-4,-65), new Material(), randomColor());
+		geoList.add(t2);
 
 		List<LightSource> lightList = new ArrayList<LightSource>();
 
 		PointLight pointlight = new PointLight(new Point3D(-4, 4, -1.75), 0.9, 0.9, 0.9, new Color(255, 0, 0));
 		//		lightList.add(pointlight);
 
-		PointLight greenlight = new PointLight(new Point3D(0, -2.5, -8), 0.5, 0.5, 0.5, new Color(0, 255, 0));
+		PointLight greenlight = new PointLight(new Point3D(0, -2.5, -68), 0.5, 0.5, 0.5, new Color(0, 255, 0));
 		lightList.add(greenlight);
 
-		Scene scene = new Scene("Focus Test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 5.0, 10.0);
-		ImageWriter imageWriter = new ImageWriter(("FocusTest8t"), 1000, 1000, 5, 5);
+		long startTime = System.nanoTime();
+		Scene scene = new Scene("Focus Test", new Color(0, 0, 0), ambientLight, lightList, geoList, camera, 30.0, 70);
+
+		ImageWriter imageWriter = new ImageWriter("b", 500, 500, 5, 5);
 
 		//Creates a Render instance to pull it all together
 		Render render = new Render(scene, imageWriter);
@@ -391,6 +395,19 @@ public class RenderTests {
 		render.renderImage();
 		//Prints it all to a file
 		imageWriter.writeToImage();
+
+		long endTime = System.nanoTime();
+
+		System.out.println("Time for 1 geometries, recursion level 4: " + ((endTime-startTime)/1000));
+
 	}
 	
+	public static Color randomColor() {
+		double min = 0.0;
+		double max = 255.0;
+		int r = (int) (((Math.random() * ((max - min) + 1)) + min));
+		int g = (int) (((Math.random() * ((max - min) + 1)) + min));
+		int b = (int) (((Math.random() * ((max - min) + 1)) + min));
+		return new Color(r,g,b);
+	}
 }
