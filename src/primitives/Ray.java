@@ -19,7 +19,6 @@ public class Ray{
 		//sets source and direction to given source and direction
 		_source = source;
 		_direction = direction;
-//		_direction = direction.normalize();
 	}	
 	
 	//Copy constructor
@@ -58,6 +57,13 @@ public class Ray{
 		boolean directionMatches = (_direction.compareTo(other.getDirection()) == 1);
 		//returns 1 if both source and direction match, 0 otherwise
 		return ((sourceMatches && directionMatches) ? 1 : 0);
+	}
+	
+	public String toString() {
+		String result = "";
+		result += "Source: " + _source;
+		result += ", Direction: " + _direction;
+		return result;
 	}
 
 }
